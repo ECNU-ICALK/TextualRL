@@ -83,8 +83,7 @@ layout above. OfficeQA document names must match the referenced source files.
 
 For Spreadsheet, retain the distribution's input/golden workbook pairs. The
 loader recognizes numbered `*_init.xlsx` / `*_golden.xlsx` pairs and bare
-`initial.xlsx` / `golden.xlsx` pairs. The release neither fabricates missing workbooks nor changes
-cached formula values. Scoring uses the existing benchmark evaluator without
+`initial.xlsx` / `golden.xlsx` pairs. Scoring uses the existing benchmark evaluator without
 offline formula recalculation.
 
 OfficeQA's default is local-document `search_mode: offline`. If enabling its
