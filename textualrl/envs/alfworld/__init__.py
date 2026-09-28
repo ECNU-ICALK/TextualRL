@@ -1,4 +1,4 @@
-"""ALFWorld environment adapter for ReflACT."""
+"""ALFWorld environment adapter for TextualRL."""
 
 from textualrl.envs.alfworld.adapter import ALFWorldAdapter
 

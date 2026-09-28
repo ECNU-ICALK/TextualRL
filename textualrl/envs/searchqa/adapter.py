@@ -1,4 +1,4 @@
-"""SearchQA environment adapter for ReflACT."""
+"""SearchQA environment adapter for TextualRL."""
 from __future__ import annotations
 
 import json

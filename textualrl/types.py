@@ -1,4 +1,4 @@
-"""Standardized I/O types for the ReflACT pipeline.
+"""Standardized I/O types for the TextualRL pipeline.
 
 Shared dataclass definitions for the 6-stage per-step pipeline
 and the 2 epoch-level stages.  All types support round-trip

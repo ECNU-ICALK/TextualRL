@@ -19,7 +19,7 @@ The ordinary step evaluates the complete candidate context on held-out validatio
 | Responsibility | Main files |
 | --- | --- |
 | Portable train/eval CLI and endpoint roles | [`textualrl/cli.py`](../textualrl/cli.py), [`scripts/train.py`](../scripts/train.py), [`scripts/eval_only.py`](../scripts/eval_only.py) |
-| Configuration loading | [`textualrl/cli.py`](../textualrl/cli.py) accepts the flat public presets; [`textualrl/config.py`](../textualrl/config.py) also retains inherited structured-config support. |
+| Public configuration loading | [`textualrl/cli.py`](../textualrl/cli.py) |
 | Rollout, critique, update, validation, and resume orchestration | [`textualrl/engine/trainer.py`](../textualrl/engine/trainer.py) |
 | Same-task grouping, outcome routing, and critic calls | [`textualrl/gradient/reflect.py`](../textualrl/gradient/reflect.py), [`textualrl/optimizer/group_relative.py`](../textualrl/optimizer/group_relative.py) |
 | Context-bounded analyst requests | [`textualrl/gradient/context_batching.py`](../textualrl/gradient/context_batching.py) |
@@ -27,6 +27,5 @@ The ordinary step evaluates the complete candidate context on held-out validatio
 | Edit ranking, schedule, and patch application | [`textualrl/optimizer/clip.py`](../textualrl/optimizer/clip.py), [`scheduler.py`](../textualrl/optimizer/scheduler.py), [`skill.py`](../textualrl/optimizer/skill.py) |
 | Runtime-observability filtering | [`textualrl/optimizer/quarantine.py`](../textualrl/optimizer/quarantine.py) |
 | Validation acceptance and best tracking | [`textualrl/evaluation/gate.py`](../textualrl/evaluation/gate.py) |
-| Inherited Meta and Slow mechanisms | [`textualrl/optimizer/meta_skill.py`](../textualrl/optimizer/meta_skill.py), [`slow_update.py`](../textualrl/optimizer/slow_update.py) |
 | Benchmark loaders, execution, and metrics | [`textualrl/envs/`](../textualrl/envs/), [`textualrl/datasets/base.py`](../textualrl/datasets/base.py) |
 | Shared optimizer prompts and benchmark-specific prompts | [`textualrl/prompts/`](../textualrl/prompts/), `textualrl/envs/<benchmark>/prompts/` |

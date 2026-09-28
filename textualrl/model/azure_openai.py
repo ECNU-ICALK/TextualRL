@@ -1,4 +1,4 @@
-"""ReflACT Model backend — Azure OpenAI wrapper with token tracking.
+"""TextualRL Model backend — Azure OpenAI wrapper with token tracking.
 
 Provides optimizer/target dual-deployment chat functions and a global
 TokenTracker for per-stage cost accounting. Previously llm/azure_openai.py.
@@ -296,7 +296,7 @@ def _make_client(role: str) -> AzureOpenAI | OpenAI:
         return OpenAI(
             base_url=cfg["endpoint"].rstrip("/"),
             api_key=cfg["api_key"] or "dummy",
-            default_headers={"User-Agent": "SkillOpt"},
+            default_headers={"User-Agent": "TextualRL"},
         )
     if auth_mode in {"api_key", "key"}:
         if not cfg["api_key"]:

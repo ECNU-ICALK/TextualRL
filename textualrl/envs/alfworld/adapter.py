@@ -1,6 +1,6 @@
-"""ALFWorld environment adapter for ReflACT.
+"""ALFWorld environment adapter for TextualRL.
 
-Connects the ReflACT training loop to ALFWorld by implementing
+Connects the TextualRL training loop to ALFWorld by implementing
 :class:`~textualrl.envs.base.EnvAdapter`.
 """
 from __future__ import annotations

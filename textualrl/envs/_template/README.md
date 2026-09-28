@@ -1,46 +1,37 @@
-# Benchmark Template
+# TextualRL benchmark template
 
-This directory provides scaffold files for adding a new benchmark to SkillOpt.
+Copy this scaffold to add a benchmark to a source checkout:
 
-## Files
+```bash
+cp -r textualrl/envs/_template textualrl/envs/your_benchmark
+mv textualrl/envs/your_benchmark/env_template.py textualrl/envs/your_benchmark/adapter.py
+mv textualrl/envs/your_benchmark/loader_template.py textualrl/envs/your_benchmark/dataloader.py
+cp textualrl/envs/your_benchmark/config_template.yaml configs/your_benchmark.yaml
+```
 
-- `env_template.py` — Environment adapter template (subclasses
-  `EnvAdapter`; implements the 4 abstract methods so the file is
-  instantiable out of the box — `reflect` is inherited).
-- `loader_template.py` — Data loader template (subclasses
-  `SplitDataLoader`; implements `load_split_items` for `.json`/`.jsonl`).
-- `config_template.yaml` — Config file template.
+1. Rename `TemplateBenchmarkEnv` and `TemplateBenchmarkLoader`, and update
+   the loader import in `adapter.py` to your new `dataloader` module.
+2. Adapt `_normalize_item` to your data. The loader reads one JSON array or
+   JSONL file per `train/`, `val/`, and `test/` directory. The inherited raw
+   loader also supports ratio splitting from a single JSON/JSONL file.
+3. Implement the TODO in `rollout`: call the target model, score its output,
+   return `id`/`hard`/`soft`, and save each non-empty trajectory to
+   `<out_dir>/predictions/<id>/conversation.json` for inherited reflection.
+   The supplied rollout only returns placeholder failures; it makes no API
+   calls and produces no measured benchmark scores or trajectory files.
+4. Register your class in `_register_builtins()` in **both** `scripts/train.py`
+   and `scripts/eval_only.py`; each has its own `_ENV_REGISTRY`.
+5. Replace `your_benchmark` in the copied flat config and provide your data.
+   Edit the copied `skills/initial.md` to supply initial task instructions.
+   Keep the YAML self-contained; the public CLI does not accept `_base_` or
+   nested model/training sections.
 
-## Usage
+Check configuration resolution before implementing the benchmark:
 
-1. **Copy the directory:**
-   ```bash
-   cp -r textualrl/envs/_template textualrl/envs/your_benchmark
-   ```
-2. **Rename the files** (drop the `_template` suffix):
-   ```bash
-   cd textualrl/envs/your_benchmark
-   mv env_template.py    adapter.py
-   mv loader_template.py dataloader.py
-   ```
-   …and inside each file rename the classes
-   (`TemplateBenchmarkEnv → YourBenchmarkAdapter`,
-   `TemplateBenchmarkLoader → YourBenchmarkLoader`)
-   and fix the cross-import in `adapter.py`.
-3. **Implement the TODO blocks** inside `adapter.py:rollout` and the
-   `_normalize_item` helper in `dataloader.py`. In addition to returning
-   `id`/`hard`/`soft`, persist each non-empty trajectory at
-   `<out_dir>/predictions/<id>/conversation.json`; the inherited `reflect`
-   method reads those files. Override `reflect` only for custom reflection
-   logic.
-4. **Register** the adapter — add matching `try / except ImportError` blocks
-   to `_register_builtins()` in both `scripts/train.py` and
-   `scripts/eval_only.py`, mapping the registry key to your
-   `YourBenchmarkAdapter` class. There is no `BENCHMARK_REGISTRY` dict in
-   `textualrl/envs/__init__.py`; each CLI keeps its own lazy `_ENV_REGISTRY`.
-5. **Create the config** at `configs/your_benchmark/default.yaml`
-   (start from `config_template.yaml`). `_base_` is a **string path**,
-   not a list.
+```bash
+textualrl train --config textualrl/envs/_template/config_template.yaml --dry-run
+```
 
-See the [Add a New Benchmark guide](../../../docs/guide/new-benchmark.md)
-for the full step-by-step with a worked `docfaithful` example.
+This check needs no credentials or data and does not validate registration
+or execute rollouts. See the [new benchmark guide](../../../docs/guide/new-benchmark.md)
+for registration code, data examples, and adapter checks.

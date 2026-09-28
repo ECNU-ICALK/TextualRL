@@ -14,11 +14,9 @@ identifiers in manifest order. It does not resample splits or change answers.
 | LiveMath | 35 / 17 / 125 | [LiveMathematicianBench](https://huggingface.co/datasets/LiveMathematicianBench/LiveMathematicianBench), 202511–202602 |
 | ALFWorld | 39 / 18 / 134 | [ALFWorld](https://github.com/alfworld/alfworld), `json_2.1.1` |
 
-The identifier lists were copied from the saved training configuration's data
-records. LiveMath uses the updated 35/17/125 split. ALFWorld follows the official
-released SkillOpt path manifest, whose selection set has 18 environments. The
-SkillOpt paper describes 140 selection environments. These are different
-protocol descriptions, so use the released manifest when reproducing this setup.
+ALFWorld uses the released SkillOpt path manifest with 18 selection environments;
+the SkillOpt paper describes 140 selection environments. Use the included
+manifest to reproduce the 39/18/134 split in this setup.
 
 ## Commands
 

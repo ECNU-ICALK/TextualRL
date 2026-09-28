@@ -8,11 +8,11 @@ The upstream MIT license is reproduced verbatim in [LICENSE](LICENSE), including
 
 > Copyright (c) 2026 Microsoft Corporation
 
-TextualRL adds groupwise critique and cross-group evidence behavior, portable configuration and launch support, and release documentation. The implementation uses the `textualrl` namespace. This package is a modified derivative; it is not a Microsoft product release. No upstream Git revision is asserted for the supplied research snapshot.
+TextualRL adds groupwise critique and cross-group evidence behavior, portable configuration and launch support, and documentation. The implementation uses the `textualrl` namespace. This package is a modified derivative; it is not a Microsoft product release.
 
 ## Vendored ALFWorld helpers from SkillRL / verl-agent
 
-`textualrl/envs/alfworld/vendor/` contains modified helpers inherited through SkillOpt. Their source headers identify SkillRL's `agent_system` package and the Apache License, Version 2.0. The historical `NTU-LANTERN/SkillRL` URL in those headers was unavailable when this release was prepared. The matching source paths are publicly available in [aiming-lab/SkillRL](https://github.com/aiming-lab/SkillRL/tree/main/agent_system).
+`textualrl/envs/alfworld/vendor/` contains modified helpers inherited through SkillOpt. Their source headers identify SkillRL's `agent_system` package and the Apache License, Version 2.0. Corresponding source paths are available in [aiming-lab/SkillRL](https://github.com/aiming-lab/SkillRL/tree/main/agent_system).
 
 | Bundled file | Source path named by the inherited header |
 | --- | --- |
@@ -23,7 +23,7 @@ TextualRL adds groupwise critique and cross-group evidence behavior, portable co
 | `alfworld_prompts.py` | `agent_system/environments/prompts/alfworld.py` |
 | `memory.py` | `agent_system/memory/base.py` and `agent_system/memory/memory.py` |
 
-These files are adapted subsets, not byte-identical copies of the current source. Local changes include package import paths, the text-only environment wrapper, process-based environment workers, prompt loading, and optional Torch handling. The exact source revision of the inherited subset is not recorded in this release.
+These files are adapted subsets. Local changes include package import paths, the text-only environment wrapper, process-based environment workers, prompt loading, and optional Torch handling.
 
 The corresponding environment source files retain the following notice:
 

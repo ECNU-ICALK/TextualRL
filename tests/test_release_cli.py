@@ -332,7 +332,7 @@ class ReleaseCLITests(unittest.TestCase):
             import socket, sys
             from unittest.mock import patch
             from textualrl.cli import main
-            from textualrl.engine.trainer import ReflACTTrainer
+            from textualrl.engine.trainer import TextualRLTrainer
             from textualrl.model import qwen_backend
             seen = []
             def inspect_dispatch(trainer):
@@ -345,7 +345,7 @@ class ReleaseCLITests(unittest.TestCase):
                 assert qwen_backend.OPTIMIZER_CONFIG.omit_output_limit
                 seen.append(trainer.cfg)
                 return {}
-            with patch.object(ReflACTTrainer, "train", inspect_dispatch), patch.object(socket.socket, "connect", side_effect=AssertionError("network forbidden")):
+            with patch.object(TextualRLTrainer, "train", inspect_dispatch), patch.object(socket.socket, "connect", side_effect=AssertionError("network forbidden")):
                 assert main(["train", "--config", "configs/searchqa.yaml", "--output-dir", sys.argv[1]]) == 0
             assert len(seen) == 1
             print("TRAIN_DISPATCH_OK")

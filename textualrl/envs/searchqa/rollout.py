@@ -208,7 +208,7 @@ def _build_user(
 def _build_codex_skill(skill_content: str) -> str:
     return render_skill_md(
         skill_content,
-        description="Dynamic ReflACT skill for solving the current SearchQA example.",
+        description="Dynamic TextualRL skill for solving the current SearchQA example.",
         preamble=(
             "Use this skill when solving the current SearchQA task.\n"
             "Read the provided context carefully, ground the answer in that context,\n"

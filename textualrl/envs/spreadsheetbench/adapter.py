@@ -1,6 +1,6 @@
-"""SpreadsheetBench environment adapter for ReflACT.
+"""SpreadsheetBench environment adapter for TextualRL.
 
-Connects the ReflACT training loop to SpreadsheetBench by implementing
+Connects the TextualRL training loop to SpreadsheetBench by implementing
 :class:`~textualrl.envs.base.EnvAdapter`.
 """
 from __future__ import annotations

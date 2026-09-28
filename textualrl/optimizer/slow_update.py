@@ -1,4 +1,4 @@
-"""ReflACT Slow Update — epoch-level longitudinal skill refinement.
+"""TextualRL Slow Update — epoch-level longitudinal skill refinement.
 
 At the end of each epoch, the slow update compares rollout performance of the
 same sample set under the previous epoch's skill vs. the current epoch's skill

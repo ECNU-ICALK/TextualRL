@@ -1,6 +1,6 @@
-"""ReflACT skill operations — edit application and patch processing.
+"""TextualRL skill operations — edit application and patch processing.
 
-The Update stage (⑤) of the ReflACT pipeline: apply a ranked set of
+The Update stage (⑤) of the TextualRL pipeline: apply a ranked set of
 edits to the current skill document, producing an updated candidate.
 Analogous to optimizer.step() in neural network training.
 """

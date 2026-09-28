@@ -1,4 +1,4 @@
-"""Prompt loading utilities for ReflACT.
+"""Prompt loading utilities for TextualRL.
 
 Prompts are stored as ``.md`` files and loaded at runtime:
 
@@ -13,7 +13,7 @@ from __future__ import annotations
 import os
 
 _PROMPTS_DIR = os.path.dirname(os.path.abspath(__file__))
-_REFLACT_DIR = os.path.dirname(_PROMPTS_DIR)
+_TEXTUALRL_DIR = os.path.dirname(_PROMPTS_DIR)
 
 _cache: dict[str, str] = {}
 
@@ -39,7 +39,7 @@ def load_prompt(name: str, env: str | None = None) -> str:
     Raises ``FileNotFoundError`` if neither path exists.
     """
     if env is not None:
-        env_path = os.path.join(_REFLACT_DIR, "envs", env, "prompts", f"{name}.md")
+        env_path = os.path.join(_TEXTUALRL_DIR, "envs", env, "prompts", f"{name}.md")
         content = _read_file(env_path)
         if content is not None:
             return content

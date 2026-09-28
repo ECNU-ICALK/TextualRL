@@ -1,6 +1,6 @@
-"""ReflACT Trainer — the main training loop.
+"""TextualRL Trainer — the main training loop.
 
-Orchestrates the 6-stage ReflACT pipeline:
+Orchestrates the 6-stage TextualRL pipeline:
   1. Rollout   — execute episodes with current skill
   2. Reflect   — analyze trajectories, generate patches
   3. Aggregate — hierarchical merge of patches
@@ -1111,8 +1111,8 @@ def _format_step_buffer(buffer: list[dict]) -> str:
 
 # ── Trainer ──────────────────────────────────────────────────────────────────
 
-class ReflACTTrainer:
-    """Main ReflACT training loop.
+class TextualRLTrainer:
+    """Main TextualRL training loop.
 
     Parameters
     ----------
@@ -1128,7 +1128,7 @@ class ReflACTTrainer:
         self.adapter = adapter
 
     def train(self) -> dict:
-        """Execute the full ReflACT training loop. Returns summary dict."""
+        """Execute the full TextualRL training loop. Returns summary dict."""
         cfg = self.cfg
         cfg.setdefault("use_cross_group_evidence", False)
         validate_cross_group_config(cfg)
@@ -1279,7 +1279,7 @@ class ReflACTTrainer:
         minimax_model_cfg = cfg.get("minimax_model")
         if minimax_model_cfg and cfg.get("target_backend") == "minimax_chat":
             set_target_deployment(str(minimax_model_cfg))
-        os.environ["REFLACT_CODEX_TRACE_TO_OPTIMIZER"] = (
+        os.environ["TEXTUALRL_CODEX_TRACE_TO_OPTIMIZER"] = (
             "1"
             if target_backend == "codex_exec" and cfg.get("codex_trace_to_optimizer", False)
             else "0"

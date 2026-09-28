@@ -1,4 +1,4 @@
-"""LiveMathematicianBench environment adapter for ReflACT."""
+"""LiveMathematicianBench environment adapter for TextualRL."""
 from __future__ import annotations
 
 import json

@@ -1,4 +1,4 @@
-"""ReflACT Aggregate stage — hierarchical patch merging.
+"""TextualRL Aggregate stage — hierarchical patch merging.
 
 The Aggregate stage takes independently-generated patches from the Reflect
 stage and merges them into a single coherent patch via hierarchical LLM calls.

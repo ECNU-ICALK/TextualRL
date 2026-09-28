@@ -153,7 +153,7 @@ def _build_messages(
 def _build_codex_skill(skill_content: str) -> str:
     return render_skill_md(
         skill_content,
-        description="Dynamic ReflACT skill for solving the current DocVQA document-image question.",
+        description="Dynamic TextualRL skill for solving the current DocVQA document-image question.",
         preamble=(
             "Use this skill when answering the current DocVQA question.\n"
             "Inspect the attached document image carefully and return the final answer inside <answer>...</answer>."

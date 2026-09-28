@@ -1,6 +1,6 @@
 # Configuration reference
 
-The public CLI accepts flat, self-contained YAML files. Start from one of the six files in [`configs/`](../configs/) and save a copy when changing an experiment. The inherited `textualrl.config` loader also understands structured configurations, but the portable `textualrl` entrypoint deliberately accepts the supplied flat form.
+The public CLI accepts flat, self-contained YAML files. Start from one of the six files in [`configs/`](../configs/) and save a copy when changing an experiment.
 
 ## Paths and models
 
@@ -22,7 +22,7 @@ Credentials are read separately from `TARGET_API_KEY` and `OPTIMIZER_API_KEY`. D
 
 ## Role-specific request settings
 
-Both public roles use the inherited `qwen_chat` transport, which supports the two API styles needed by these presets. The name does not force both roles to use a Qwen model.
+Both public roles use the `qwen_chat` transport, which supports the two API styles needed by these presets. The name does not force both roles to use a Qwen model.
 
 | Flat key | Default target | Default optimizer |
 | --- | --- | --- |
@@ -52,11 +52,9 @@ An endpoint base URL may contain a comma-separated pool. A role's `endpoint_conc
 | `edit_budget`, `min_edit_budget`, `lr_scheduler` | Maximum edits per step and their schedule. |
 | `use_gate`, `gate_metric` | Existing step-level validation selection; presets use hard success score. |
 | `reject_unobservable_runtime_edits` | Retains the existing filter for instructions depending on unavailable runtime information. |
-| `quarantine_rejected_edits` | Retains inherited rejected-edit handling and its configured thresholds. |
-| `use_meta_skill`, `use_slow_update` | Enables inherited epoch-level optimizer memory and context guidance. |
-| `slow_update_gate_with_selection` | Whether Slow guidance is subjected to the selection comparison; `false` in these presets. |
+| `quarantine_rejected_edits` | Rejected-edit handling and its configured thresholds. |
 | `eval_test` | Runs final validation/promotion and initial/best/final test evaluation after optimization. |
 
-The source contains additional inherited optional mechanisms. The flat presets retain their explicit settings, including disabled branches, to make the starting configuration inspectable. A setting's presence does not mean that its branch is active. See [the method guide](method.md) for the default algorithm.
+See [the method guide](method.md) for the default algorithm.
 
 An existing `stop_after_step` diagnostic setting can stop after a requested completed step. A nonzero value creates a step-limited run and omits the final test stage; do not report it as a completed main experiment. The public presets set it to zero.

@@ -1,6 +1,6 @@
-"""ReflACT environment adapter — abstract interface.
+"""TextualRL environment adapter — abstract interface.
 
-To connect ReflACT to a new environment (benchmark, simulator, etc.),
+To connect TextualRL to a new environment (benchmark, simulator, etc.),
 implement a subclass of :class:`EnvAdapter` with environment-specific
 rollout and reflection logic.
 
@@ -35,9 +35,9 @@ from textualrl.prompts import load_prompt
 
 
 class EnvAdapter(ABC):
-    """Abstract adapter for connecting ReflACT to any environment.
+    """Abstract adapter for connecting TextualRL to any environment.
 
-    Subclasses must implement all abstract methods. The ReflACT trainer
+    Subclasses must implement all abstract methods. The TextualRL trainer
     calls these methods at the appropriate pipeline stages.
     """
 

@@ -3,13 +3,14 @@
 
 Usage
 -----
-    python scripts/eval_only.py \
-        --config configs/spreadsheetbench/default.yaml \
+    python -m textualrl eval \
+        --config configs/spreadsheet.yaml \
         --skill textualrl/envs/spreadsheetbench/skills/initial.md \
-        --split_dir /path/to/split \
-        --out_root outputs/eval_skill0
+        --data-dir /path/to/data \
+        --output-dir outputs/eval_skill0
 
-All YAML keys can be overridden from the CLI, same as train.py.
+Edit the YAML preset for benchmark controls. The public CLI resolves paths and
+role-specific endpoint settings before dispatching to this evaluator.
 """
 from __future__ import annotations
 
@@ -64,18 +65,8 @@ def _register_builtins() -> None:
     except ImportError:
         pass
     try:
-        from textualrl.envs.babyvision.adapter import BabyVisionAdapter
-        _ENV_REGISTRY["babyvision"] = BabyVisionAdapter
-    except ImportError:
-        pass
-    try:
         from textualrl.envs.spreadsheetbench.adapter import SpreadsheetBenchAdapter
         _ENV_REGISTRY["spreadsheetbench"] = SpreadsheetBenchAdapter
-    except ImportError:
-        pass
-    try:
-        from textualrl.envs.mmrb.adapter import MMRBAdapter
-        _ENV_REGISTRY["mmrb"] = MMRBAdapter
     except ImportError:
         pass
     try:
@@ -84,23 +75,8 @@ def _register_builtins() -> None:
     except ImportError:
         pass
     try:
-        from textualrl.envs.mathverse.adapter import MathVerseAdapter
-        _ENV_REGISTRY["mathverse"] = MathVerseAdapter
-    except ImportError:
-        pass
-    try:
         from textualrl.envs.officeqa.adapter import OfficeQAAdapter
         _ENV_REGISTRY["officeqa"] = OfficeQAAdapter
-    except ImportError:
-        pass
-    try:
-        from textualrl.envs.sealqa.adapter import SealQAAdapter
-        _ENV_REGISTRY["sealqa"] = SealQAAdapter
-    except ImportError:
-        pass
-    try:
-        from textualrl.envs.swebench.adapter import SWEBenchAdapter
-        _ENV_REGISTRY["swebench"] = SWEBenchAdapter
     except ImportError:
         pass
 

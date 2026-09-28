@@ -39,7 +39,7 @@ def render_skill_md(
     skill_content: str,
     *,
     name: str = "textualrl-target",
-    description: str = "Dynamic ReflACT skill for the current benchmark task.",
+    description: str = "Dynamic TextualRL skill for the current benchmark task.",
     preamble: str = "",
 ) -> str:
     body = skill_content.strip() or "No additional dynamic guidance was provided for this task."
@@ -49,7 +49,7 @@ def render_skill_md(
         f'description: "{description}"',
         "---",
         "",
-        "# ReflACT Target Skill",
+        "# TextualRL Target Skill",
         "",
     ]
     if preamble.strip():
@@ -476,7 +476,7 @@ def _exec_prompt(prompt: str, *, allow_file_edits: bool = False) -> str:
         "Use the workspace files to solve the task. Read task.md and the skill at "
         ".agents/skills/textualrl-target/SKILL.md before answering. "
         "If ATTACHMENTS.md exists, read it and inspect the listed local files. "
-        "Do not call a Skill tool; the ReflACT guidance is a local markdown file. "
+        "Do not call a Skill tool; the TextualRL guidance is a local markdown file. "
         f"Do not ask for permission. {edit_instruction}"
         "Return only the final answer text, keeping any required <answer>...</answer> tags exactly.\n\n"
         f"{_normalize_target_exec_prompt(prompt)}"
@@ -588,7 +588,7 @@ def _run_claude_code_sdk_exec(
                 "Use the workspace files to solve the task. Read task.md and the skill at "
                 ".agents/skills/textualrl-target/SKILL.md before answering. "
                 "If ATTACHMENTS.md exists, read it and inspect the listed local files. "
-                "Do not call a Skill tool; the ReflACT guidance is a local markdown file. "
+                "Do not call a Skill tool; the TextualRL guidance is a local markdown file. "
                 + (
                     "You may modify files in the workspace when the task asks you to create an artifact. "
                     if allow_file_edits

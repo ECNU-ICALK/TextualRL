@@ -1,6 +1,6 @@
-"""Learning-rate (edit budget) schedulers for ReflACT.
+"""Learning-rate (edit budget) schedulers for TextualRL.
 
-The "learning rate" in ReflACT is the maximum number of skill edits allowed
+The "learning rate" in TextualRL is the maximum number of skill edits allowed
 per optimization step.  A scheduler controls how this budget changes over
 the course of training.
 

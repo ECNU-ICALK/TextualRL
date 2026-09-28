@@ -1,7 +1,7 @@
 """Vendored ALFWorld environment runtime.
 
 Minimal subset of SkillRL's agent_system package needed to run
-ALFWorld environments with ReflACT. Original source:
+ALFWorld environments with TextualRL. Original source:
 https://github.com/NTU-LANTERN/SkillRL (Apache-2.0 License)
 """
 from .alfworld_envs import AlfworldEnvs, build_alfworld_envs

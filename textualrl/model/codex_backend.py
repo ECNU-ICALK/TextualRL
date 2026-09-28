@@ -1,4 +1,4 @@
-"""Codex CLI backend for ReflACT."""
+"""Codex CLI backend for TextualRL."""
 from __future__ import annotations
 
 import base64

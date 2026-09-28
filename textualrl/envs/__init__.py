@@ -1,1 +1,1 @@
-"""ReflACT environment adapters."""
+"""TextualRL environment adapters."""

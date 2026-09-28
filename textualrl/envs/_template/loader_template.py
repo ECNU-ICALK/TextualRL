@@ -1,8 +1,8 @@
 """
-Benchmark Data Loader Template
+TextualRL Benchmark Data Loader Template
 ================================
-Copy this file and implement ``load_split_items`` to load your benchmark
-data. The loader is a :class:`textualrl.datasets.base.SplitDataLoader`
+Copy this file and adapt ``_normalize_item`` to your benchmark data.
+The loader is a :class:`textualrl.datasets.base.SplitDataLoader`
 subclass — the base class handles both ``split_mode="split_dir"`` (read
 an existing train/val/test layout) and ``split_mode="ratio"`` (build the
 splits from a single raw file deterministically).
@@ -20,17 +20,25 @@ from textualrl.datasets.base import SplitDataLoader
 
 def _normalize_item(raw: dict) -> dict:
     """
-    Normalise one raw entry into the dict shape SkillOpt expects.
+    Normalise one raw entry into the dict shape TextualRL expects.
 
-    The only **hard** requirement is ``"id"`` (str). Add whatever extra
-    fields your :class:`TemplateBenchmarkEnv.rollout` needs.
+    The required ``"id"`` must be non-empty, unique across tasks, and safe
+    as a directory name. Add whatever extra fields your rollout needs.
     """
+    item_id = raw.get("uid")
+    if item_id is None or item_id == "":
+        item_id = raw.get("id")
+    if item_id is None or not str(item_id).strip():
+        raise ValueError("Each benchmark item requires a non-empty id or uid")
+    answer = raw.get("ground_truth")
+    if answer is None or answer == "":
+        answer = raw.get("answer", "")
     return {
-        "id": str(raw.get("uid") or raw.get("id") or ""),
+        "id": str(item_id),
         "question": str(raw.get("question") or raw.get("prompt") or ""),
-        "ground_truth": str(raw.get("ground_truth") or raw.get("answer") or ""),
+        "ground_truth": "" if answer is None else str(answer),
         "task_type": str(raw.get("category") or raw.get("task_type") or "template"),
-        # ── add benchmark-specific keys here ──
+        # TODO: add benchmark-specific keys here.
     }
 
 
@@ -44,9 +52,10 @@ class TemplateBenchmarkLoader(SplitDataLoader):
     ``val_items``, ``test_items``, and builds ``BatchSpec`` objects on
     demand.
 
-    If you want to support ``split_mode="ratio"`` (auto-split a single
-    file into train/val/test), also implement
-    :meth:`load_raw_items(data_path)` returning the full list of items.
+    The inherited :meth:`load_raw_items` already supports JSON/JSONL in
+    ``split_mode="ratio"``. It writes the raw splits, which are then read
+    and normalized by :meth:`load_split_items`. Override it only for a
+    different source format.
     """
 
     def load_split_items(self, split_path: str) -> list[dict]:
@@ -82,6 +91,6 @@ class TemplateBenchmarkLoader(SplitDataLoader):
             f"No .json or .jsonl file found in {split_path}"
         )
 
-    # Optional — only needed if you intend to use ``split_mode='ratio'``.
+    # Optional — override only for a raw format other than JSON/JSONL.
     # def load_raw_items(self, data_path: str) -> list[dict]:
     #     ...

@@ -219,7 +219,7 @@ def _get_deployment() -> str:
 def _build_codex_skill(skill_content: str) -> str:
     return render_skill_md(
         skill_content,
-        description="Dynamic ReflACT skill for solving the current SpreadsheetBench task.",
+        description="Dynamic TextualRL skill for solving the current SpreadsheetBench task.",
         preamble=(
             "Use this skill when solving the current SpreadsheetBench task in this workspace.\n"
             "Write a single self-contained Python solution to `solution.py`.\n"

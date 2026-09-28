@@ -1,4 +1,4 @@
-"""Shared model utilities for ReflACT backends."""
+"""Shared model utilities for TextualRL backends."""
 from __future__ import annotations
 
 import json

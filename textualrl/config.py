@@ -1,16 +1,18 @@
-"""ReflACT config loading engine — structured YAML with inheritance.
+"""TextualRL config loading engine — structured YAML with inheritance.
 
 Supports two config formats:
-  1. **Structured** (new): sections like ``model``, ``train``, ``gradient``,
+  1. **Structured**: sections like ``model``, ``train``, ``gradient``,
      ``optimizer``, ``evaluation``, ``env`` — with ``_base_`` inheritance.
-  2. **Flat** (legacy): all keys at top level — fully backward compatible.
+  2. **Flat**: all keys at top level, as used by the public presets.
 
 Usage::
 
     from textualrl.config import load_config, flatten_config
 
-    cfg = load_config("configs/searchqa_default.yaml")
+    cfg = load_config("configs/searchqa.yaml")
     flat = flatten_config(cfg)  # always returns flat dict for trainer
+
+The public CLI resolves environment-variable placeholders before training.
 """
 from __future__ import annotations
 

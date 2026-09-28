@@ -1,5 +1,5 @@
 """
-Benchmark Environment Template
+TextualRL Benchmark Environment Template
 ===============================
 Copy this file and implement the TODO sections to add a new benchmark.
 
@@ -102,11 +102,18 @@ class TemplateBenchmarkEnv(EnvAdapter):
         """
         Run a batch of episodes under the current skill.
 
+        This scaffold returns placeholder failures without calling a model.
+        These are not measured benchmark results.
+
         TODO: replace this loop with your real rollout. For each item:
           1. Build the prompt using `skill_content` as the system message.
           2. Call your target model.
           3. Score the prediction.
-          4. Return a dict with at minimum: ``id`` (str), ``hard`` (0|1),
+          4. Write the non-empty conversation (a list of message dicts) to
+             ``<out_dir>/predictions/<id>/conversation.json`` so inherited
+             reflection can read the trajectory. IDs must be unique and
+             safe to use as directory names.
+          5. Return a dict with at minimum: ``id`` (str), ``hard`` (0|1),
              ``soft`` (float in [0, 1]). Add any env-specific extras you
              need for reflect() — they will be preserved on
              ``RolloutResult.extras``.
@@ -122,6 +129,7 @@ class TemplateBenchmarkEnv(EnvAdapter):
                     "soft": 0.0,
                     "predicted_answer": "",
                     "question": item.get("question", ""),
+                    "task_type": item.get("task_type", "template"),
                     "fail_reason": "template rollout — not implemented",
                 }
             )

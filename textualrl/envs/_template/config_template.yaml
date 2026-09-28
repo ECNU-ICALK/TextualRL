@@ -1,55 +1,57 @@
-# ──────────────────────────────────────────────────
-# SkillOpt Config Template — <Your Benchmark Name>
-# ──────────────────────────────────────────────────
-# Copy this file to configs/<your_benchmark>/default.yaml
-# and customize the values below.
+# TextualRL benchmark scaffold. Copy to configs/your_benchmark.yaml.
+# Replace your_benchmark throughout this file and register your adapter in
+# scripts/train.py and scripts/eval_only.py before running real training.
+# The public CLI accepts flat, self-contained YAML (no _base_ inheritance).
 
-# Inherit global defaults.
-# NOTE: `_base_` is a string path, not a list.
-_base_: ../_base_/default.yaml
+env: your_benchmark
+out_root: ${TEXTUALRL_OUTPUT_DIR}/your_benchmark
+# Copied with the scaffold; edit this Markdown for your task.
+skill_init: ${TEXTUALRL_REPO_ROOT}/textualrl/envs/your_benchmark/skills/initial.md
 
-# ── Environment ──────────────────────────────────
-env:
-  name: your_benchmark            # Must match the key registered in scripts/train.py
-  # Optional: a seed skill document. Create this file yourself before the
-  # first run, or omit the key to start from an empty skill.
-  # skill_init: textualrl/envs/your_benchmark/skills/initial.md
-  data_path: data/your_benchmark  # Path to your data (for split_mode: ratio)
-  split_dir: ""                   # Set this and use split_mode: split_dir for pre-split data
-  split_mode: ratio               # "ratio" or "split_dir"
-  split_ratio: "2:1:7"            # train:val:test (used when split_mode: ratio)
-  workers: 4                      # Parallel rollout workers
-  max_completion_tokens: 4096     # Cap per target-model call
-  limit: 0                        # 0 = no limit; small int = debug sample
+# Each split directory contains one JSON array or JSONL file.
+split_mode: split_dir
+split_dir: ${TEXTUALRL_DATA_DIR}/your_benchmark/splits
+# For a single raw JSON/JSONL file, set split_mode: ratio and split_dir: ''.
+# data_path: ${TEXTUALRL_DATA_DIR}/your_benchmark/items.jsonl
+split_ratio: '2:1:7'
+split_seed: 42
+workers: 4
+max_completion_tokens: 4096
+limit: 0                         # Per-split limit; 0 loads all items.
 
-# ── Training ─────────────────────────────────────
-train:
-  num_epochs: 4
-  batch_size: 40
-  accumulation: 1
-  seed: 42
+num_epochs: 4
+batch_size: 40
+accumulation: 1
+seed: 42
+same_task_rollouts: 1            # Override expand_same_task_rollouts for >1.
+analyst_workers: 4
+minibatch_size: 8
+merge_batch_size: 8
+edit_budget: 4                   # Maximum edits per optimizer step.
+lr_scheduler: cosine
+use_slow_update: true
+use_meta_skill: true
+use_gate: true
+sel_env_num: 0                   # 0 evaluates the full validation split.
+test_env_num: 0                  # 0 evaluates the full test split.
+eval_test: true
+evaluation_target_temperature: 0.0
+evaluation_target_seed: 42
 
-# ── Gradient (Reflection) ───────────────────────
-gradient:
-  analyst_workers: 16             # Parallel reflection workers
-  minibatch_size: 8
-  merge_batch_size: 8
-
-# ── Optimizer ────────────────────────────────────
-optimizer:
-  learning_rate: 4                # Max edits per step (edit budget)
-  lr_scheduler: cosine            # cosine | linear | constant | autonomous
-  use_slow_update: true           # Epoch-boundary momentum
-  use_meta_skill: true            # Cross-epoch optimizer memory
-
-# ── Evaluation ───────────────────────────────────
-evaluation:
-  use_gate: true                  # Validation gating
-  eval_test: true                 # Run test eval after training
-
-# ── Model ────────────────────────────────────────
-# Override only what differs from the inherited defaults.
-model:
-  optimizer_backend: openai_chat  # openai_chat | claude_chat | qwen_chat | minimax_chat
-  target_backend: openai_chat     # … plus codex_exec / claude_code_exec for target only
-  reasoning_effort: medium
+# Both roles use the public OpenAI-compatible transport. The CLI supplies
+# defaults for these variables; see docs/configuration.md to override them.
+# Keep credentials in TARGET_API_KEY and OPTIMIZER_API_KEY, never in YAML.
+target_backend: qwen_chat
+target_model: ${TEXTUALRL_TARGET_MODEL}
+target_qwen_chat_base_url: ${TARGET_BASE_URL}
+target_api_style: chat_completions
+target_thinking_api: chat_template
+target_reasoning_effort: none
+target_endpoint_concurrency: 4
+optimizer_backend: qwen_chat
+optimizer_model: ${TEXTUALRL_OPTIMIZER_MODEL}
+optimizer_qwen_chat_base_url: ${OPTIMIZER_BASE_URL}
+optimizer_api_style: responses
+optimizer_thinking_api: reasoning_effort
+optimizer_reasoning_effort: medium
+optimizer_endpoint_concurrency: 4

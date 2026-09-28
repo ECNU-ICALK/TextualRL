@@ -1,4 +1,4 @@
-"""ReflACT gradient clipping — LLM-driven edit ranking and selection.
+"""TextualRL gradient clipping — LLM-driven edit ranking and selection.
 
 Analogous to gradient clipping in neural network training: ranks candidate
 edits by importance and selects the top-L to apply, controlling the

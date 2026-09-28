@@ -1,4 +1,4 @@
-"""SpreadsheetBench environment adapter for ReflACT."""
+"""SpreadsheetBench environment adapter for TextualRL."""
 
 from textualrl.envs.spreadsheetbench.adapter import SpreadsheetBenchAdapter
 

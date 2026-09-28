@@ -1,1 +1,1 @@
-"""SearchQA environment package for ReflACT."""
+"""SearchQA environment package for TextualRL."""

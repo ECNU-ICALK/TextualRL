@@ -66,13 +66,11 @@ Use the same data, model settings, and configuration when resuming. `--resume-fr
 | Edit budget | Cosine schedule from 4 to 2 |
 | Training sampling / evaluation request seed | 42 / 42 |
 | Target training / evaluation temperature | 0.7 / 0.0 |
-| Meta / Slow | Enabled / enabled |
-| Slow selection comparison | Disabled: the inherited unconditional Slow path |
 | Worker / role endpoint concurrency defaults | 4, adjustable for the user's endpoint capacity |
 
 The lower concurrency defaults make the examples easier to run on user-provided services. They are not the paper's measured throughput setting. Dataset size determines the number of batches and the final partial batch; grouping can skip homogeneous routes that lack two distinct tasks.
 
-Target output budgets retain the copied research settings:
+Target output-token limits are:
 
 | Benchmark | Target output-token limit |
 | --- | ---: |
@@ -89,11 +87,11 @@ The configuration's sampling seed and evaluation request seed have different rol
 
 ## Best-on-validation and final contexts
 
-`best_skill.md` is the context with the best recorded validation score. The active context after the last update is the final context. They can differ because Slow can inject guidance at an epoch boundary without the ordinary step-level validation comparison. That injection does not immediately establish a new validation score.
+`best_skill.md` is the context with the best recorded validation score. The active context after the last update is the final context. These can differ, and the final context may not yet have a validation score.
 
 The active context is saved under `skills/skill_vNNNN.md`; `runtime_state.json` identifies its `current_skill_path`, `current_origin`, and the best checkpoint. Use that recorded path to locate the final context rather than guessing a step number. The initial context is `skills/skill_v0000.md`.
 
-With `eval_test: true`, the inherited trainer attempts a final-context validation before test evaluation. If that score beats the stored best, it promotes the final context to `best_skill.md`. It then reports the initial, best-on-validation, and final test results separately, reusing evaluation results when final and best are identical. Inspect the run log and summary for failed or absent evaluations; a missing score is not zero. With final test evaluation disabled, the final validation/promotion pass is also skipped.
+With `eval_test: true`, the trainer attempts a final-context validation before test evaluation. If that score beats the stored best, it promotes the final context to `best_skill.md`. It then reports the initial, best-on-validation, and final test results separately, reusing evaluation results when final and best are identical. Inspect the run log and summary for failed or absent evaluations; a missing score is not zero. With final test evaluation disabled, the final validation/promotion pass is also skipped.
 
 For test reporting, normally evaluate `best_skill.md` and identify it as best-on-validation. If reporting the final context, label it explicitly and obtain its path from the runtime state. Never select a context based on which has the best test score.
 
@@ -103,7 +101,7 @@ Artifact paths below are relative to the training output directory. Some artifac
 
 | Path | Contents |
 | --- | --- |
-| `effective_config.json` | Portable CLI settings passed to the inherited launcher; credentials are supplied only through environment variables. |
+| `effective_config.json` | Resolved CLI settings; credentials are supplied only through environment variables. |
 | `runtime_requests.jsonl` | Portable runtime request diagnostics for endpoint roles and request controls. |
 | `config.json` | Resolved trainer settings with credential fields redacted. |
 | `history.json`, `runtime_state.json` | Completed-step history, active/best checkpoint state, and resume information. |
@@ -115,14 +113,12 @@ Artifact paths below are relative to the training output directory. Some artifac
 | `steps/step_NNNN/candidate_skill.md`, `edit_apply_report.json` | Evaluated candidate and patch-application outcomes. |
 | `steps/step_NNNN/selection_eval/`, `step_record.json` | Candidate validation rollouts and step decision. |
 | `steps/step_NNNN/trajectory_digest.json` | Within-epoch feedback, including rejected combinations when applicable. |
-| `slow_update/epoch_NN/` | Longitudinal comparison pairs, Slow output, and action. |
-| `meta_skill/epoch_NN/` | Longitudinal comparison pairs and optimizer-side memory. |
 | `summary.json` | Validation/test scores, context origins, step counts, and token accounting. |
 | `test_eval_baseline/`, `test_eval/`, `test_eval_final/` | Initial, best-on-validation, and final test outputs when test evaluation is enabled. |
 
 When accumulation exceeds one, rollout and patch folders are nested in `steps/step_NNNN/batch_A/`. Standalone `eval` writes predictions and `eval_summary.json` to its own output directory. The global `summary.json` uses `test_hard` for the best-on-validation test score and `final_test_hard` for the final-context test score.
 
-Token accounting uses reported usage when available. Some inherited backends estimate missing usage, so token summaries are diagnostic accounting rather than provider invoices. Keep task content and model traces in local output directories; the source package does not include generated runs.
+Token accounting uses reported usage when available. Some backends estimate missing usage, so token summaries are diagnostic accounting rather than provider invoices. Keep task content and model traces in local output directories; the source package does not include generated runs.
 
 ## Execution environment
 

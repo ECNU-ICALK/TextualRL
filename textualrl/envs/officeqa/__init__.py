@@ -1,1 +1,1 @@
-"""OfficeQA environment package for ReflACT."""
+"""OfficeQA environment package for TextualRL."""

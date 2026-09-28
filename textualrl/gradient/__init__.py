@@ -1,4 +1,4 @@
-"""SkillOpt Gradient -- trajectory analysis and patch generation.
+"""TextualRL Gradient -- trajectory analysis and patch generation.
 
 Analogous to gradient computation in neural network training: analyzes
 minibatch rollout trajectories to produce skill-edit patches (the "gradient"

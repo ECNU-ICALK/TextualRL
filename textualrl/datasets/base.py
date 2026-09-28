@@ -1,6 +1,6 @@
-"""Generic task dataloader abstractions for ReflACT.
+"""Generic task dataloader abstractions for TextualRL.
 
-ReflACT does not train model parameters directly. Instead, it iterates over
+TextualRL does not train model parameters directly. Instead, it iterates over
 task batches, rolls out the current skill, reflects on failures/successes,
 and updates the skill document. Because of that, the "dataloader" abstraction
 here is closer to a batch sampler / episode planner than a tensor loader.
@@ -70,7 +70,7 @@ class BatchSpec:
 
 
 class BaseDataLoader(ABC):
-    """Abstract base class for task batch planning in ReflACT.
+    """Abstract base class for task batch planning in TextualRL.
 
     Subclasses are responsible for defining how a train or eval batch is
     sampled. The default implementation here provides deterministic epoch seed

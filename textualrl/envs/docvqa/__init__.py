@@ -1,1 +1,1 @@
-"""DocVQA environment package for ReflACT."""
+"""DocVQA environment package for TextualRL."""

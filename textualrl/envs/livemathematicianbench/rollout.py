@@ -154,7 +154,7 @@ def _build_user(
 def _build_codex_skill(skill_content: str) -> str:
     return render_skill_md(
         skill_content,
-        description="Dynamic ReflACT skill for solving the current LiveMathematicianBench multiple-choice question.",
+        description="Dynamic TextualRL skill for solving the current LiveMathematicianBench multiple-choice question.",
         preamble=(
             "Use this skill when solving the current math multiple-choice question.\n"
             "Inspect the option wording carefully and output only the final choice label inside <answer>...</answer>."

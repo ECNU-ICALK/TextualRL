@@ -1,4 +1,4 @@
-"""ALFWorld rollout module for ReflACT.
+"""ALFWorld rollout module for TextualRL.
 
 Provides:
   - build_alfworld_env(): build ALFWorld environment (wraps vendored SkillRL env)
@@ -242,7 +242,7 @@ def run_alfworld_batch(
 ) -> list[dict]:
     """Run a batch of ALFWorld episodes.
 
-    Returns a list of result dicts compatible with SkillOpt pipeline:
+    Returns a list of result dicts compatible with TextualRL pipeline:
     [
         {
             "id": "<env_idx>_<gamefile_hash>",

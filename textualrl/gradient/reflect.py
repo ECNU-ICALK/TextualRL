@@ -1,4 +1,4 @@
-"""ReflACT core Reflect engine -- minibatch trajectory analysis.
+"""TextualRL core Reflect engine -- minibatch trajectory analysis.
 
 Provides environment-agnostic minibatch trajectory analysis: instead of
 analyzing each trajectory independently, trajectories are grouped into
@@ -310,7 +310,7 @@ def fmt_minibatch_trajectories(
             )
 
         if (
-            os.environ.get("REFLACT_CODEX_TRACE_TO_OPTIMIZER", "0") == "1"
+            os.environ.get("TEXTUALRL_CODEX_TRACE_TO_OPTIMIZER", "0") == "1"
             and (not stratified_route or stratified_primary)
         ):
             codex_trace_summary = item.get("codex_trace_summary", "")

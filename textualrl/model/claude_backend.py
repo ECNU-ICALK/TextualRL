@@ -1,4 +1,4 @@
-"""Claude CLI chat backend for ReflACT."""
+"""Claude CLI chat backend for TextualRL."""
 from __future__ import annotations
 
 import base64
@@ -258,7 +258,7 @@ def _run_claude_print(*, system: str, prompt: str, model: str, tools: list[dict[
             cmd.extend(["--setting-sources", CLAUDE_SETTING_SOURCES])
         if system:
             # Write the system prompt to a file, not argv: here the skill being
-            # optimized IS the system prompt, and SkillOpt grows it over training,
+            # optimized IS the system prompt, and TextualRL grows it over training,
             # so past ~30 KB it would re-hit the Windows argv cap (WinError 206).
             # The CLI reads it via --append-system-prompt-file.
             system_path = os.path.join(temp_dir, "system_prompt.txt")

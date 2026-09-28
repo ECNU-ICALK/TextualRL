@@ -25,7 +25,7 @@ python -m textualrl --help
 
 `python -m pip install -e '.[benchmarks]'` installs all listed Python extras. It does not download datasets or environment assets. Follow [data preparation](data.md) before launching a real run. ALFWorld's dependencies may require platform-specific build tools; its text environment does not require serving the target model on the same machine.
 
-The packaged CLI calls remote or separately hosted model endpoints. A local vLLM server, GPU training framework, or model weights are not part of the core installation. Legacy backends remain in `textualrl/model/`; the optional `azure` extra supplies Azure identity authentication for those callers. The published examples use separate OpenAI-compatible role endpoints rather than Azure identity or executable-agent backends.
+The packaged CLI calls remote or separately hosted model endpoints. A local vLLM server, GPU training framework, or model weights are not part of the core installation. The examples use separate OpenAI-compatible endpoints for the target and optimizer roles.
 
 ## Credentials
 
@@ -35,7 +35,7 @@ The CLI reads four environment variables:
 | --- | --- |
 | `TARGET_API_KEY` | Credential for target rollouts and evaluation. |
 | `TARGET_BASE_URL` | Base URL for the target model service. |
-| `OPTIMIZER_API_KEY` | Separate credential for critique, merge, ranking, Meta, and Slow calls during training. |
+| `OPTIMIZER_API_KEY` | Separate credential for optimizer calls during training. |
 | `OPTIMIZER_BASE_URL` | Base URL for the optimizer service. |
 
 Copy and edit [`.env.example`](../.env.example), then export its variables with `set -a; source .env; set +a`. The CLI does not automatically load `.env`. The placeholder endpoint domains are deliberately nonfunctional; replace them with endpoints you control or are authorized to use. Evaluation needs only the target role. `--dry-run` needs neither role's credentials.

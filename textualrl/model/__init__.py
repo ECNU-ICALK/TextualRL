@@ -1,4 +1,4 @@
-"""ReflACT model API with runtime backend selection for the target path."""
+"""TextualRL model API with runtime backend selection for the target path."""
 
 from __future__ import annotations
 

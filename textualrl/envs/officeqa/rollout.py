@@ -333,7 +333,7 @@ def _workspace_doc_path(path: str, docs_roots: list[str]) -> str:
 def _build_codex_skill(skill_content: str) -> str:
     return render_skill_md(
         skill_content,
-        description="Dynamic ReflACT skill for solving the current OfficeQA local-document question.",
+        description="Dynamic TextualRL skill for solving the current OfficeQA local-document question.",
         preamble=(
             "Use this skill when answering the current OfficeQA question.\n"
             "Inspect the provided local document excerpts or files, ground the answer in the evidence,\n"

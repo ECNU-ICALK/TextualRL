@@ -3,14 +3,14 @@
 
 Usage
 -----
-    python scripts/train.py --config configs/alfworld/default.yaml
+    python -m textualrl train --config configs/alfworld.yaml
 
-Any YAML key can be overridden from the command line::
+Inspect a preset without making model calls::
 
-    python scripts/train.py --config configs/alfworld/default.yaml \\
-        --batch_size 40 --num_epochs 2 --seed 123
+    python -m textualrl train --config configs/alfworld.yaml --dry-run
 
-Run ``python scripts/train.py --help`` for a full list of options.
+Edit the YAML preset for training controls. Run ``python -m textualrl train
+--help`` for model, path, and resume overrides.
 """
 from __future__ import annotations
 
@@ -49,18 +49,8 @@ def _register_builtins() -> None:
     except ImportError:
         pass
     try:
-        from textualrl.envs.searchqa_mce.adapter import SearchQAMCEAdapter
-        _ENV_REGISTRY["searchqa_mce"] = SearchQAMCEAdapter
-    except ImportError:
-        pass
-    try:
         from textualrl.envs.livemathematicianbench.adapter import LiveMathematicianBenchAdapter
         _ENV_REGISTRY["livemathematicianbench"] = LiveMathematicianBenchAdapter
-    except ImportError:
-        pass
-    try:
-        from textualrl.envs.babyvision.adapter import BabyVisionAdapter
-        _ENV_REGISTRY["babyvision"] = BabyVisionAdapter
     except ImportError:
         pass
     try:
@@ -69,33 +59,13 @@ def _register_builtins() -> None:
     except ImportError:
         pass
     try:
-        from textualrl.envs.mmrb.adapter import MMRBAdapter
-        _ENV_REGISTRY["mmrb"] = MMRBAdapter
-    except ImportError:
-        pass
-    try:
         from textualrl.envs.docvqa.adapter import DocVQAAdapter
         _ENV_REGISTRY["docvqa"] = DocVQAAdapter
     except ImportError:
         pass
     try:
-        from textualrl.envs.mathverse.adapter import MathVerseAdapter
-        _ENV_REGISTRY["mathverse"] = MathVerseAdapter
-    except ImportError:
-        pass
-    try:
         from textualrl.envs.officeqa.adapter import OfficeQAAdapter
         _ENV_REGISTRY["officeqa"] = OfficeQAAdapter
-    except ImportError:
-        pass
-    try:
-        from textualrl.envs.sealqa.adapter import SealQAAdapter
-        _ENV_REGISTRY["sealqa"] = SealQAAdapter
-    except ImportError:
-        pass
-    try:
-        from textualrl.envs.swebench.adapter import SWEBenchAdapter
-        _ENV_REGISTRY["swebench"] = SWEBenchAdapter
     except ImportError:
         pass
 
@@ -671,8 +641,8 @@ def main() -> None:
     adapter = get_adapter(cfg)
 
     # Build trainer and run
-    from textualrl.engine.trainer import ReflACTTrainer
-    trainer = ReflACTTrainer(cfg, adapter)
+    from textualrl.engine.trainer import TextualRLTrainer
+    trainer = TextualRLTrainer(cfg, adapter)
     summary = trainer.train()
 
     print(f"\n  Output saved to: {cfg['out_root']}")

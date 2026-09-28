@@ -1,1 +1,1 @@
-"""LiveMathematicianBench environment package for ReflACT."""
+"""LiveMathematicianBench environment package for TextualRL."""
