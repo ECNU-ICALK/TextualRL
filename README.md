@@ -2,6 +2,8 @@
   <img src="docs/assets/textualrl-logo-compact.png" alt="TextualRL: Textual Reinforcement Learning for Context Management" width="600" height="149">
 </p>
 
+<h2 align="center">TextualRL: Textual Reinforcement Learning for Context Management</h2>
+
 TextualRL improves an agent's shared textual instructions while keeping the target model's weights fixed. It collects multiple rollouts for each training task, critiques outcome groups, reviews proposed edits against pooled trajectory evidence, and selects candidate contexts using held-out validation rewards.
 
 ## Framework
