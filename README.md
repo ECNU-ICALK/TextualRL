@@ -12,12 +12,6 @@ TextualRL improves an agent's shared textual instructions while keeping the targ
 
 **Cross-Group Policy Update** consolidates proposals, reviews their scope against current-step evidence, and applies a bounded patch. The ordinary step accepts a candidate only when its configured held-out validation score improves. Within-epoch feedback informs subsequent critique calls.
 
-## What is included
-
-- Groupwise Policy Critique and Cross-Group Policy Update implementations, prompts, and initial skills.
-- Configurations and adapters for SearchQA, SpreadsheetBench, OfficeQA, DocVQA, LiveMathematicianBench, and ALFWorld.
-- A portable training/evaluation CLI with separate target and optimizer credentials, dry-run configuration inspection, and resume support.
-
 ## Install
 
 Use Python 3.10 or newer from the repository directory:
