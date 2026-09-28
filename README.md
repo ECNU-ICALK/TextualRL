@@ -1,6 +1,16 @@
-# TextualRL
+<p align="center">
+  <img src="docs/assets/textualrl-logo.png" alt="TextualRL: Textual Reinforcement Learning for Context Management" width="1000">
+</p>
 
 TextualRL improves an agent's shared textual instructions while keeping the target model's weights fixed. It collects multiple rollouts for each training task, critiques outcome groups, reviews proposed edits against pooled trajectory evidence, and selects candidate contexts using held-out validation rewards.
+
+## Framework
+
+[![TextualRL framework: Groupwise Policy Critique and Cross-Group Policy Update](docs/assets/textualrl-framework.png)](docs/assets/textualrl-framework.pdf)
+
+**Groupwise Policy Critique** keeps same-task rollout groups together. Mixed outcomes support within-task contrast, all-success groups support cross-task preservation, and all-failure groups support cross-task repair. Critics return edit proposals and evidence cards separately, including evidence with no proposed edit.
+
+**Cross-Group Policy Update** consolidates proposals, reviews their scope against current-step evidence, and applies a bounded patch. The ordinary step accepts a candidate only when its configured held-out validation score improves. Within-epoch feedback informs subsequent critique calls.
 
 ## What is included
 
@@ -77,12 +87,6 @@ python -m textualrl train \
 ```
 
 See [running experiments](docs/running.md) for configuration controls, checkpoint selection, and artifacts. A normal run can make many model calls: four rollouts for each of 40 tasks already produce 160 training trajectories per full batch, before critique and validation.
-
-## Method and implementation
-
-**Groupwise Policy Critique** keeps same-task rollout groups together. Mixed outcomes support within-task contrast; all-success and all-failure groups support cross-task preservation or repair. Critics return edit proposals and evidence cards separately, including evidence with no proposed edit.
-
-**Cross-Group Policy Update** consolidates proposals, reviews their scope against current-step evidence, and applies a bounded patch. The ordinary step accepts a candidate only when its configured validation score improves.
 
 ## Documentation
 
