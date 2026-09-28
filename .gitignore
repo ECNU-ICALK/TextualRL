@@ -1,0 +1,36 @@
+# Credentials and machine-local settings
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Benchmark data and run artifacts
+/data/*
+!/data/manifests/
+/data/manifests/*
+!/data/manifests/*.json
+/outputs/
+/results/
+/runs/
+/experiments/
+*.log
+
+# Python and build output
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/
+*.swp

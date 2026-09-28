@@ -1,0 +1,2 @@
+# Core editable installation. Benchmark-specific extras are in pyproject.toml.
+-e .

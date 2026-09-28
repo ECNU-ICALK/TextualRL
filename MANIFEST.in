@@ -1,0 +1,11 @@
+include README.md LICENSE THIRD_PARTY_NOTICES.md requirements.txt .env.example
+recursive-include configs *.yaml
+recursive-include docs *.md *.txt
+recursive-include tests *.py
+recursive-include skillopt *.md *.yaml
+prune data
+recursive-include data/manifests *.json
+prune outputs
+prune results
+prune experiments
+global-exclude *.py[cod] .DS_Store
