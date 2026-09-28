@@ -1,17 +1,7 @@
 """Generic OpenAI-compatible chat backend for optimizer and target paths.
 
-This backend talks to *any* service that exposes an OpenAI-compatible
-``/chat/completions`` endpoint through the official ``openai`` SDK. A single
-implementation therefore covers a large family of providers, for example:
-
-* DeepSeek           (``https://api.deepseek.com``)
-* Groq               (``https://api.groq.com/openai/v1``)
-* Together AI        (``https://api.together.xyz/v1``)
-* Mistral / Fireworks / OpenRouter / Perplexity / xAI Grok
-* Ollama             (``http://localhost:11434/v1``)
-* vLLM / SGLang / TGI self-hosted servers
-* LiteLLM proxy      (``http://localhost:4000``)
-* Azure OpenAI and OpenAI itself
+This backend connects to a configured OpenAI-compatible
+``/chat/completions`` endpoint through the official ``openai`` SDK.
 
 Unlike the Azure backend it never assumes Azure-specific auth or the Responses
 API — it only needs a ``base_url`` and an ``api_key`` (some local servers accept
@@ -41,8 +31,7 @@ from textualrl.model.common import (
 
 BACKEND_NAME = "openai_compatible"
 
-# A neutral, widely-available default. Real deployments should set the model
-# explicitly (e.g. "deepseek-chat", "llama-3.3-70b-versatile", "qwen2.5:7b").
+# Set the model explicitly to the deployment served by the configured endpoint.
 _DEFAULT_BASE_URL = "https://api.openai.com/v1"
 
 

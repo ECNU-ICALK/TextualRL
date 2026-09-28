@@ -23,7 +23,7 @@ _OPENAI_COMPATIBLE_API_VERSION = "openai-compat"
 
 ENDPOINT = os.environ.get(
     "AZURE_OPENAI_ENDPOINT",
-    "",  # Set via env var or config: e.g. "https://your-resource.openai.azure.com/"
+    "",  # Set via environment variable or configuration.
 )
 API_VERSION = os.environ.get("AZURE_OPENAI_API_VERSION", "2024-12-01-preview")
 API_KEY = os.environ.get(
@@ -288,7 +288,7 @@ def _make_client(role: str) -> AzureOpenAI | OpenAI:
     if not cfg["endpoint"]:
         raise ValueError(
             f"Azure OpenAI endpoint is not configured for {role}. "
-            "Pass --azure_openai_endpoint https://your-resource.openai.azure.com/ "
+            "Pass --azure_openai_endpoint with your endpoint URL "
             "or set AZURE_OPENAI_ENDPOINT in your environment."
         )
     auth_mode = cfg["auth_mode"]
