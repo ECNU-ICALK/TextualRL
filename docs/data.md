@@ -83,9 +83,7 @@ layout above. OfficeQA document names must match the referenced source files.
 
 For Spreadsheet, retain the distribution's input/golden workbook pairs. The
 loader recognizes numbered `*_init.xlsx` / `*_golden.xlsx` pairs and bare
-`initial.xlsx` / `golden.xlsx` pairs. Historical task 42930 had a filename mismatch,
-so check its pairing in the data you obtain. A golden file must come from the
-original dataset. The release neither fabricates missing workbooks nor changes
+`initial.xlsx` / `golden.xlsx` pairs. The release neither fabricates missing workbooks nor changes
 cached formula values. Scoring uses the existing benchmark evaluator without
 offline formula recalculation.
 
