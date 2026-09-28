@@ -161,8 +161,8 @@ def resolve_config(args: argparse.Namespace, environ=None) -> dict:
 def run(args: argparse.Namespace, cfg: dict) -> None:
     configure_environment(cfg, args.action)
     # Import only after role-specific credentials and transport controls exist.
-    from skillopt import model
-    from skillopt.model import qwen_backend
+    from textualrl import model
+    from textualrl.model import qwen_backend
     # Also isolate repeated in-process invocations from previously imported state.
     qwen_backend.TARGET_CONFIG = qwen_backend._initial_config("target")
     qwen_backend.OPTIMIZER_CONFIG = qwen_backend._initial_config("optimizer")

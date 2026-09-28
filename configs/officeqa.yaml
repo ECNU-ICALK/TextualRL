@@ -117,7 +117,7 @@ sel_env_num: 0
 test_env_num: 0
 eval_test: true
 env: officeqa
-skill_init: ${TEXTUALRL_REPO_ROOT}/skillopt/envs/officeqa/skills/initial.md
+skill_init: ${TEXTUALRL_REPO_ROOT}/textualrl/envs/officeqa/skills/initial.md
 out_root: ${TEXTUALRL_OUTPUT_DIR}/officeqa
 split_mode: split_dir
 split_seed: 42

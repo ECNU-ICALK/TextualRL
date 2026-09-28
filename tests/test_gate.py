@@ -1,4 +1,4 @@
-"""Tests for skillopt.evaluation.gate — the validation gate decision function.
+"""Tests for textualrl.evaluation.gate — the validation gate decision function.
 
 The gate is the optimizer's model-selection / early-stopping core: given a
 candidate skill's score, it decides whether to accept it as the new current
@@ -11,7 +11,7 @@ import dataclasses
 
 import pytest
 
-from skillopt.evaluation.gate import (
+from textualrl.evaluation.gate import (
     GateResult,
     evaluate_gate,
     select_gate_score,

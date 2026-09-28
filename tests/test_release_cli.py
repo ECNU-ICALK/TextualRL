@@ -29,8 +29,8 @@ ROOT = Path(__file__).resolve().parents[1]
 def real_backend():
     """Load the real urllib backend without importing unrelated SDK backends."""
     with patch.dict(sys.modules):
-        for name, filename in (("skillopt.model.common", "common.py"), ("_release_test_qwen", "qwen_backend.py")):
-            spec = importlib.util.spec_from_file_location(name, ROOT / "skillopt/model" / filename)
+        for name, filename in (("textualrl.model.common", "common.py"), ("_release_test_qwen", "qwen_backend.py")):
+            spec = importlib.util.spec_from_file_location(name, ROOT / "textualrl/model" / filename)
             module = importlib.util.module_from_spec(spec)
             sys.modules[name] = module
             spec.loader.exec_module(module)
@@ -47,7 +47,7 @@ class ReleaseCLITests(unittest.TestCase):
             "env": "livemathematicianbench",
             "data_path": "${TEXTUALRL_DATA_DIR}/math.jsonl",
             "out_root": "${TEXTUALRL_OUTPUT_DIR}/math",
-            "skill_init": "${TEXTUALRL_REPO_ROOT}/skillopt/envs/livemathematicianbench/skills/initial.md",
+            "skill_init": "${TEXTUALRL_REPO_ROOT}/textualrl/envs/livemathematicianbench/skills/initial.md",
             "target_model": "${TEXTUALRL_TARGET_MODEL}",
             "optimizer_model": "${TEXTUALRL_OPTIMIZER_MODEL}",
             "target_qwen_chat_base_url": "${TARGET_BASE_URL}",
@@ -85,7 +85,7 @@ class ReleaseCLITests(unittest.TestCase):
     def test_dry_run_needs_neither_keys_data_nor_backend_imports(self):
         output = self.root / "never-created"
         process = subprocess.run(
-            [sys.executable, "-c", "from textualrl.cli import main; import sys; main(sys.argv[1:]); assert 'skillopt.model' not in sys.modules",
+            [sys.executable, "-c", "from textualrl.cli import main; import sys; main(sys.argv[1:]); assert 'textualrl.model' not in sys.modules",
              "train", "--config", str(self.config_path), "--output-dir", str(output), "--dry-run"],
             cwd=ROOT, env={"PATH": os.environ.get("PATH", ""), "TARGET_API_KEY": "do-not-print-target",
                            "OPTIMIZER_API_KEY": "do-not-print-optimizer"},
@@ -186,12 +186,12 @@ class ReleaseCLITests(unittest.TestCase):
     def test_dispatch_forwards_models_and_evaluation_controls(self):
         args, config = self.configuration("eval", "--output-dir", str(self.root / "eval"))
         with patch.dict(os.environ, {"TARGET_API_KEY": "target-secret"}, clear=True), real_backend() as backend:
-            model = ModuleType("skillopt.model")
+            model = ModuleType("textualrl.model")
             model.qwen_backend = backend
             model.set_target_backend = lambda value: None
             model.set_optimizer_backend = lambda value: None
             model.target_generation_overrides = backend.target_generation_overrides
-            package = ModuleType("skillopt")
+            package = ModuleType("textualrl")
             package.model = model
             def launch(path, run_name):
                 self.assertEqual(Path(path).name, "eval_only.py")
@@ -201,7 +201,7 @@ class ReleaseCLITests(unittest.TestCase):
                 self.assertEqual(backend._target_seed_override, 42)
                 self.assertEqual(backend.TARGET_CONFIG.api_key, "target-secret")
                 self.assertEqual(backend.OPTIMIZER_CONFIG.api_key, "")
-            with patch.dict(sys.modules, {"skillopt": package, "skillopt.model": model}), patch.object(cli.runpy, "run_path", side_effect=launch) as run_path:
+            with patch.dict(sys.modules, {"textualrl": package, "textualrl.model": model}), patch.object(cli.runpy, "run_path", side_effect=launch) as run_path:
                 cli.run(args, config)
                 run_path.assert_called_once()
         self.assertNotIn("target-secret", (self.root / "eval/effective_config.json").read_text())
@@ -230,7 +230,7 @@ class ReleaseCLITests(unittest.TestCase):
                         self.assertEqual(backend.OPTIMIZER_CONFIG.deployment, "gpt-5.5")
 
     def test_sanitized_overflow_still_triggers_core_context_split(self):
-        spec = importlib.util.spec_from_file_location("_release_context_batching", ROOT / "skillopt/gradient/context_batching.py")
+        spec = importlib.util.spec_from_file_location("_release_context_batching", ROOT / "textualrl/gradient/context_batching.py")
         batching = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(batching)
         _, config = self.configuration()
@@ -291,7 +291,7 @@ class ReleaseCLITests(unittest.TestCase):
             (directory / "items.json").write_text(json.dumps(rows))
         config = {
             "env": "searchqa", "split_mode": "split_dir", "split_dir": str(self.root / "splits"),
-            "skill_init": str(ROOT / "skillopt/envs/searchqa/skills/initial.md"),
+            "skill_init": str(ROOT / "textualrl/envs/searchqa/skills/initial.md"),
             "workers": 1, "max_turns": 1, "max_completion_tokens": 32,
         }
         self.config_path.write_text(yaml.safe_dump(config))
@@ -332,8 +332,8 @@ class ReleaseCLITests(unittest.TestCase):
             import socket, sys
             from unittest.mock import patch
             from textualrl.cli import main
-            from skillopt.engine.trainer import ReflACTTrainer
-            from skillopt.model import qwen_backend
+            from textualrl.engine.trainer import ReflACTTrainer
+            from textualrl.model import qwen_backend
             seen = []
             def inspect_dispatch(trainer):
                 assert trainer.cfg["target_model"] == "Qwen3.8-27B"

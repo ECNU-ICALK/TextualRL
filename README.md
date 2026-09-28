@@ -8,7 +8,7 @@ TextualRL improves an agent's shared textual instructions while keeping the targ
 - Configurations and adapters for SearchQA, SpreadsheetBench, OfficeQA, DocVQA, LiveMathematicianBench, and ALFWorld.
 - A portable training/evaluation CLI with separate target and optimizer credentials, dry-run configuration inspection, and resume support.
 
-Benchmark datasets, trained skills, run outputs, model weights, and paper-result artifacts are not bundled. This is a prepared source release, not a claim that the paper's experiments have been rerun with this package. [Release scope](docs/reproducibility.md) explains the source provenance and configuration differences.
+Benchmark datasets, trained skills, run outputs, model weights, and paper-result artifacts are not bundled.
 
 ## Install
 
@@ -93,7 +93,6 @@ See [running experiments](docs/running.md) for configuration controls, checkpoin
 - [Configuration and endpoint controls](docs/configuration.md)
 - [Training, evaluation, resume, and saved artifacts](docs/running.md)
 - [Method-to-code map](docs/method.md)
-- [Release provenance and reproducibility scope](docs/reproducibility.md)
 
 ## Offline checks
 

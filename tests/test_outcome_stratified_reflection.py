@@ -7,8 +7,8 @@ from pathlib import Path
 from unittest.mock import patch
 
 
-from skillopt.config import flatten_config
-from skillopt.gradient.reflect import (
+from textualrl.config import flatten_config
+from textualrl.gradient.reflect import (
     _outcome_stratified_routing_audit,
     _split_task_block_minibatches,
     build_outcome_stratified_task_blocks,
@@ -16,7 +16,7 @@ from skillopt.gradient.reflect import (
     run_outcome_stratified_analyst_group,
     run_minibatch_reflect,
 )
-from skillopt.optimizer.group_relative import (
+from textualrl.optimizer.group_relative import (
     annotate_analyst_patch,
     configure_group_relative_edit_credit,
     is_group_relative_edit_credit_enabled,
@@ -293,7 +293,7 @@ class OutcomeStratifiedReflectionTest(unittest.TestCase):
                 )
 
             with patch(
-                "skillopt.gradient.reflect.run_outcome_stratified_analyst_group",
+                "textualrl.gradient.reflect.run_outcome_stratified_analyst_group",
                 side_effect=fake_analyst,
             ):
                 run_minibatch_reflect(
@@ -350,10 +350,10 @@ class OutcomeStratifiedReflectionTest(unittest.TestCase):
                 str(prediction_dir),
             )["mixed"][0]
             with patch(
-                "skillopt.gradient.reflect.chat_optimizer",
+                "textualrl.gradient.reflect.chat_optimizer",
                 return_value=("{}", {}),
             ), patch(
-                "skillopt.gradient.reflect.extract_json",
+                "textualrl.gradient.reflect.extract_json",
                 return_value={
                     "patch": {
                         "edits": [
@@ -435,10 +435,10 @@ class OutcomeStratifiedReflectionTest(unittest.TestCase):
             )["mixed"][0]
 
             with patch(
-                "skillopt.gradient.reflect.chat_optimizer",
+                "textualrl.gradient.reflect.chat_optimizer",
                 side_effect=fake_chat_optimizer,
             ), patch(
-                "skillopt.gradient.reflect.extract_json",
+                "textualrl.gradient.reflect.extract_json",
                 return_value={"patch": {"edits": []}},
             ):
                 result = run_outcome_stratified_analyst_group(

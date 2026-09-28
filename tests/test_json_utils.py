@@ -1,9 +1,9 @@
-"""Tests for skillopt.utils.json_utils."""
+"""Tests for textualrl.utils.json_utils."""
 from __future__ import annotations
 
 import pytest
 
-from skillopt.utils.json_utils import (
+from textualrl.utils.json_utils import (
     _top_level_brace_objects,
     _top_level_bracket_arrays,
     extract_json,

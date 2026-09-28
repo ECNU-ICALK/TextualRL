@@ -8,14 +8,14 @@ from unittest.mock import patch
 
 from scripts.eval_only import parse_args as parse_eval_args
 from scripts.train import _LEGACY_TO_STRUCTURED, parse_args
-from skillopt.config import flatten_config
-from skillopt.envs.docvqa.adapter import DocVQAAdapter
-from skillopt.envs.livemathematicianbench.adapter import (
+from textualrl.config import flatten_config
+from textualrl.envs.docvqa.adapter import DocVQAAdapter
+from textualrl.envs.livemathematicianbench.adapter import (
     LiveMathematicianBenchAdapter,
 )
-from skillopt.envs.officeqa.adapter import OfficeQAAdapter
-from skillopt.envs.searchqa.adapter import SearchQAAdapter
-from skillopt.model import qwen_backend
+from textualrl.envs.officeqa.adapter import OfficeQAAdapter
+from textualrl.envs.searchqa.adapter import SearchQAAdapter
+from textualrl.model import qwen_backend
 
 
 class EvaluationGenerationSeedTest(unittest.TestCase):

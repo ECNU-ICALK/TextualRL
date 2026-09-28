@@ -6,22 +6,22 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from skillopt.envs.alfworld.adapter import (
+from textualrl.envs.alfworld.adapter import (
     ALFWorldAdapter,
     ALFWorldBatchRun,
 )
-from skillopt.envs.alfworld.rollout import (
+from textualrl.envs.alfworld.rollout import (
     annotate_same_task_groups as annotate_alfworld_groups,
 )
-from skillopt.envs.docvqa.adapter import DocVQAAdapter
-from skillopt.envs.docvqa.rollout import annotate_same_task_groups as annotate_docvqa_groups
-from skillopt.envs.livemathematicianbench.adapter import LiveMathematicianBenchAdapter
-from skillopt.envs.livemathematicianbench.rollout import (
+from textualrl.envs.docvqa.adapter import DocVQAAdapter
+from textualrl.envs.docvqa.rollout import annotate_same_task_groups as annotate_docvqa_groups
+from textualrl.envs.livemathematicianbench.adapter import LiveMathematicianBenchAdapter
+from textualrl.envs.livemathematicianbench.rollout import (
     annotate_same_task_groups as annotate_livemath_groups,
 )
-from skillopt.envs.searchqa.adapter import SearchQAAdapter
-from skillopt.envs.searchqa.rollout import annotate_same_task_groups, run_batch
-from skillopt.gradient.reflect import _select_same_task_group_representatives
+from textualrl.envs.searchqa.adapter import SearchQAAdapter
+from textualrl.envs.searchqa.rollout import annotate_same_task_groups, run_batch
+from textualrl.gradient.reflect import _select_same_task_group_representatives
 
 
 class SameTaskRolloutTest(unittest.TestCase):
@@ -317,7 +317,7 @@ class SameTaskRolloutTest(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as tmp:
             with patch(
-                "skillopt.envs.searchqa.rollout.process_one",
+                "textualrl.envs.searchqa.rollout.process_one",
                 side_effect=fake_process,
             ):
                 results = run_batch(expanded, tmp, "skill", workers=4)
@@ -350,7 +350,7 @@ class SameTaskRolloutTest(unittest.TestCase):
         evaluation = [{"id": "task-a"}]
 
         with patch(
-            "skillopt.envs.searchqa.adapter.run_batch",
+            "textualrl.envs.searchqa.adapter.run_batch",
             return_value=[],
         ) as batch:
             adapter.rollout(grouped, "skill", "/tmp/grouped")

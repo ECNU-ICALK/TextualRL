@@ -49,10 +49,10 @@ dev = ["build>=1.2", "pytest>=8.0", "ruff>=0.4.0"]
 textualrl = "textualrl.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["textualrl", "textualrl.*", "skillopt", "skillopt.*", "scripts"]
+include = ["textualrl", "textualrl.*", "scripts"]
 
 [tool.setuptools.package-data]
-skillopt = [
+textualrl = [
     "prompts/*.md",
     "envs/*/prompts/*.md",
     "envs/*/skills/*.md",

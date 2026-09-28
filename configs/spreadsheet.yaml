@@ -117,7 +117,7 @@ sel_env_num: 0
 test_env_num: 0
 eval_test: true
 env: spreadsheetbench
-skill_init: ${TEXTUALRL_REPO_ROOT}/skillopt/envs/spreadsheetbench/skills/initial.md
+skill_init: ${TEXTUALRL_REPO_ROOT}/textualrl/envs/spreadsheetbench/skills/initial.md
 out_root: ${TEXTUALRL_OUTPUT_DIR}/spreadsheet
 split_mode: split_dir
 split_seed: 42

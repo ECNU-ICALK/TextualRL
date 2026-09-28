@@ -4,9 +4,9 @@ from pathlib import Path
 import pytest
 
 from scripts.prepare_data import materialize, read_records
-from skillopt.envs.docvqa.dataloader import DocVQADataLoader
-from skillopt.envs.officeqa.dataloader import OfficeQADataLoader
-from skillopt.envs.searchqa.dataloader import SearchQADataLoader
+from textualrl.envs.docvqa.dataloader import DocVQADataLoader
+from textualrl.envs.officeqa.dataloader import OfficeQADataLoader
+from textualrl.envs.searchqa.dataloader import SearchQADataLoader
 
 
 def manifest(*ids):
@@ -69,7 +69,7 @@ def test_published_manifest_sizes_and_alfworld_paths():
 
 
 def test_custom_search_requires_explicit_service(monkeypatch):
-    from skillopt.envs.officeqa import tool_runtime
+    from textualrl.envs.officeqa import tool_runtime
     monkeypatch.delenv("OFFICEQA_CUSTOM_SEARCH_URL", raising=False)
     with pytest.raises(ValueError, match="URL missing"):
         tool_runtime.custom_search("query", auth_token="test-only")

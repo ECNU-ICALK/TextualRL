@@ -1,9 +1,9 @@
-"""Tests for skillopt.utils.scoring."""
+"""Tests for textualrl.utils.scoring."""
 from __future__ import annotations
 
 import pytest
 
-from skillopt.utils.scoring import compute_score, skill_hash
+from textualrl.utils.scoring import compute_score, skill_hash
 
 
 class _ResultObject:

@@ -117,7 +117,7 @@ sel_env_num: 0
 test_env_num: 0
 eval_test: true
 env: livemathematicianbench
-skill_init: ${TEXTUALRL_REPO_ROOT}/skillopt/envs/livemathematicianbench/skills/initial.md
+skill_init: ${TEXTUALRL_REPO_ROOT}/textualrl/envs/livemathematicianbench/skills/initial.md
 out_root: ${TEXTUALRL_OUTPUT_DIR}/livemath
 split_mode: split_dir
 split_seed: 42

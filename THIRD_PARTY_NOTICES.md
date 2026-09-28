@@ -2,17 +2,17 @@
 
 ## Microsoft SkillOpt
 
-This release is derived from [Microsoft SkillOpt](https://github.com/microsoft/SkillOpt). Its training loop, benchmark adapters, model clients, optimizer utilities, prompts, and package organization form the foundation of the retained `skillopt` runtime.
+This release is derived from [Microsoft SkillOpt](https://github.com/microsoft/SkillOpt). Its training loop, benchmark adapters, model clients, optimizer utilities, prompts, and package organization form the foundation of the `textualrl` runtime.
 
 The upstream MIT license is reproduced verbatim in [LICENSE](LICENSE), including:
 
 > Copyright (c) 2026 Microsoft Corporation
 
-TextualRL adds groupwise critique and cross-group evidence behavior, portable configuration and launch support, and release documentation. The `skillopt` namespace is retained for compatibility and attribution. This package is a modified derivative; it is not a Microsoft product release. No upstream Git revision is asserted for the supplied research snapshot.
+TextualRL adds groupwise critique and cross-group evidence behavior, portable configuration and launch support, and release documentation. The implementation uses the `textualrl` namespace. This package is a modified derivative; it is not a Microsoft product release. No upstream Git revision is asserted for the supplied research snapshot.
 
 ## Vendored ALFWorld helpers from SkillRL / verl-agent
 
-`skillopt/envs/alfworld/vendor/` contains modified helpers inherited through SkillOpt. Their source headers identify SkillRL's `agent_system` package and the Apache License, Version 2.0. The historical `NTU-LANTERN/SkillRL` URL in those headers was unavailable when this release was prepared. The matching source paths are publicly available in [aiming-lab/SkillRL](https://github.com/aiming-lab/SkillRL/tree/main/agent_system).
+`textualrl/envs/alfworld/vendor/` contains modified helpers inherited through SkillOpt. Their source headers identify SkillRL's `agent_system` package and the Apache License, Version 2.0. The historical `NTU-LANTERN/SkillRL` URL in those headers was unavailable when this release was prepared. The matching source paths are publicly available in [aiming-lab/SkillRL](https://github.com/aiming-lab/SkillRL/tree/main/agent_system).
 
 | Bundled file | Source path named by the inherited header |
 | --- | --- |

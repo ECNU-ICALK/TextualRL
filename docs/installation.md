@@ -10,7 +10,7 @@ python -m pip install -e .
 python -m textualrl --help
 ```
 
-`python -m pip install -r requirements.txt` is equivalent to the core editable installation. The `textualrl` console command and `python -m textualrl` use the same entrypoint. The distribution also includes the `skillopt` namespace and the two legacy launchers used by the wrapper.
+`python -m pip install -r requirements.txt` is equivalent to the core editable installation. The `textualrl` console command and `python -m textualrl` use the same entrypoint. The CLI, runtime, and benchmark adapters share the `textualrl` package namespace.
 
 ## Benchmark extras
 
@@ -25,7 +25,7 @@ python -m textualrl --help
 
 `python -m pip install -e '.[benchmarks]'` installs all listed Python extras. It does not download datasets or environment assets. Follow [data preparation](data.md) before launching a real run. ALFWorld's dependencies may require platform-specific build tools; its text environment does not require serving the target model on the same machine.
 
-The packaged CLI calls remote or separately hosted model endpoints. A local vLLM server, GPU training framework, or model weights are not part of the core installation. Legacy backends remain in `skillopt/model/`; the optional `azure` extra supplies Azure identity authentication for those callers. The published examples use separate OpenAI-compatible role endpoints rather than Azure identity or executable-agent backends.
+The packaged CLI calls remote or separately hosted model endpoints. A local vLLM server, GPU training framework, or model weights are not part of the core installation. Legacy backends remain in `textualrl/model/`; the optional `azure` extra supplies Azure identity authentication for those callers. The published examples use separate OpenAI-compatible role endpoints rather than Azure identity or executable-agent backends.
 
 ## Credentials
 

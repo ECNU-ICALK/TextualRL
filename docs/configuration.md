@@ -1,6 +1,6 @@
 # Configuration reference
 
-The public CLI accepts flat, self-contained YAML files. Start from one of the six files in [`configs/`](../configs/) and save a copy when changing an experiment. The inherited `skillopt.config` loader also understands structured configurations, but the portable `textualrl` entrypoint deliberately accepts the supplied flat form.
+The public CLI accepts flat, self-contained YAML files. Start from one of the six files in [`configs/`](../configs/) and save a copy when changing an experiment. The inherited `textualrl.config` loader also understands structured configurations, but the portable `textualrl` entrypoint deliberately accepts the supplied flat form.
 
 ## Paths and models
 
@@ -57,6 +57,6 @@ An endpoint base URL may contain a comma-separated pool. A role's `endpoint_conc
 | `slow_update_gate_with_selection` | Whether Slow guidance is subjected to the selection comparison; `false` in these presets. |
 | `eval_test` | Runs final validation/promotion and initial/best/final test evaluation after optimization. |
 
-The source contains additional inherited optional mechanisms. The flat presets retain their explicit settings, including disabled branches, to make the starting configuration inspectable. A setting's presence does not mean that its branch is active. See [the method guide](method.md) for the default algorithm and [release provenance](reproducibility.md) for what has and has not been reproduced.
+The source contains additional inherited optional mechanisms. The flat presets retain their explicit settings, including disabled branches, to make the starting configuration inspectable. A setting's presence does not mean that its branch is active. See [the method guide](method.md) for the default algorithm.
 
 An existing `stop_after_step` diagnostic setting can stop after a requested completed step. A nonzero value creates a step-limited run and omits the final test stage; do not report it as a completed main experiment. The public presets set it to zero.

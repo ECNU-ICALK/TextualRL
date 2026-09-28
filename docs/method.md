@@ -19,19 +19,17 @@ The ordinary step evaluates the complete candidate context on held-out validatio
 | Responsibility | Main files |
 | --- | --- |
 | Portable train/eval CLI and endpoint roles | [`textualrl/cli.py`](../textualrl/cli.py), [`scripts/train.py`](../scripts/train.py), [`scripts/eval_only.py`](../scripts/eval_only.py) |
-| Configuration loading | [`textualrl/cli.py`](../textualrl/cli.py) accepts the flat public presets; [`skillopt/config.py`](../skillopt/config.py) also retains inherited structured-config support. |
-| Rollout, critique, update, validation, and resume orchestration | [`skillopt/engine/trainer.py`](../skillopt/engine/trainer.py) |
-| Same-task grouping, outcome routing, and critic calls | [`skillopt/gradient/reflect.py`](../skillopt/gradient/reflect.py), [`skillopt/optimizer/group_relative.py`](../skillopt/optimizer/group_relative.py) |
-| Context-bounded analyst requests | [`skillopt/gradient/context_batching.py`](../skillopt/gradient/context_batching.py) |
-| Evidence cards and cross-group proposal review | [`skillopt/optimizer/cross_group.py`](../skillopt/optimizer/cross_group.py), [`skillopt/gradient/aggregate.py`](../skillopt/gradient/aggregate.py) |
-| Edit ranking, schedule, and patch application | [`skillopt/optimizer/clip.py`](../skillopt/optimizer/clip.py), [`scheduler.py`](../skillopt/optimizer/scheduler.py), [`skill.py`](../skillopt/optimizer/skill.py) |
-| Runtime-observability filtering | [`skillopt/optimizer/quarantine.py`](../skillopt/optimizer/quarantine.py) |
-| Validation acceptance and best tracking | [`skillopt/evaluation/gate.py`](../skillopt/evaluation/gate.py) |
-| Inherited Meta and Slow mechanisms | [`skillopt/optimizer/meta_skill.py`](../skillopt/optimizer/meta_skill.py), [`slow_update.py`](../skillopt/optimizer/slow_update.py) |
-| Benchmark loaders, execution, and metrics | [`skillopt/envs/`](../skillopt/envs/), [`skillopt/datasets/base.py`](../skillopt/datasets/base.py) |
-| Shared optimizer prompts and benchmark-specific prompts | [`skillopt/prompts/`](../skillopt/prompts/), `skillopt/envs/<benchmark>/prompts/` |
-
-Some inherited names such as `ReflACTTrainer`, `gradient`, and `skillopt` remain in the source and artifacts. They are compatibility names rather than additional optimization methods introduced by this release. The source contains optional inherited research branches beyond the defaults; their presence does not imply that every branch is part of the paper configuration.
+| Configuration loading | [`textualrl/cli.py`](../textualrl/cli.py) accepts the flat public presets; [`textualrl/config.py`](../textualrl/config.py) also retains inherited structured-config support. |
+| Rollout, critique, update, validation, and resume orchestration | [`textualrl/engine/trainer.py`](../textualrl/engine/trainer.py) |
+| Same-task grouping, outcome routing, and critic calls | [`textualrl/gradient/reflect.py`](../textualrl/gradient/reflect.py), [`textualrl/optimizer/group_relative.py`](../textualrl/optimizer/group_relative.py) |
+| Context-bounded analyst requests | [`textualrl/gradient/context_batching.py`](../textualrl/gradient/context_batching.py) |
+| Evidence cards and cross-group proposal review | [`textualrl/optimizer/cross_group.py`](../textualrl/optimizer/cross_group.py), [`textualrl/gradient/aggregate.py`](../textualrl/gradient/aggregate.py) |
+| Edit ranking, schedule, and patch application | [`textualrl/optimizer/clip.py`](../textualrl/optimizer/clip.py), [`scheduler.py`](../textualrl/optimizer/scheduler.py), [`skill.py`](../textualrl/optimizer/skill.py) |
+| Runtime-observability filtering | [`textualrl/optimizer/quarantine.py`](../textualrl/optimizer/quarantine.py) |
+| Validation acceptance and best tracking | [`textualrl/evaluation/gate.py`](../textualrl/evaluation/gate.py) |
+| Inherited Meta and Slow mechanisms | [`textualrl/optimizer/meta_skill.py`](../textualrl/optimizer/meta_skill.py), [`slow_update.py`](../textualrl/optimizer/slow_update.py) |
+| Benchmark loaders, execution, and metrics | [`textualrl/envs/`](../textualrl/envs/), [`textualrl/datasets/base.py`](../textualrl/datasets/base.py) |
+| Shared optimizer prompts and benchmark-specific prompts | [`textualrl/prompts/`](../textualrl/prompts/), `textualrl/envs/<benchmark>/prompts/` |
 
 ## Inherited Meta and Slow settings
 

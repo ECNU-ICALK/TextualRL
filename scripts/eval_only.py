@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""SkillOpt eval-only: run a single skill on a dataset without training.
+"""TextualRL eval-only: run a single skill on a dataset without training.
 
 Usage
 -----
     python scripts/eval_only.py \
         --config configs/spreadsheetbench/default.yaml \
-        --skill skillopt/envs/spreadsheetbench/skills/initial.md \
+        --skill textualrl/envs/spreadsheetbench/skills/initial.md \
         --split_dir /path/to/split \
         --out_root outputs/eval_skill0
 
@@ -24,7 +24,7 @@ _PROJECT_ROOT = os.path.dirname(_SCRIPT_DIR)
 if _PROJECT_ROOT not in sys.path:
     sys.path.insert(0, _PROJECT_ROOT)
 
-from skillopt.model import (
+from textualrl.model import (
     configure_azure_openai,
     configure_claude_code_exec,
     configure_codex_exec,
@@ -36,10 +36,10 @@ from skillopt.model import (
     set_optimizer_backend,
     set_optimizer_deployment,
 )
-from skillopt.model.common import default_model_for_backend, normalize_backend_name
+from textualrl.model.common import default_model_for_backend, normalize_backend_name
 
 _OPENAI_DEFAULT_MODEL_SENTINELS = {"gpt-5.4", "gpt-5.5"}
-from skillopt.utils import compute_score
+from textualrl.utils import compute_score
 
 
 # ── Reuse registry from train.py ───────────────────────────────────────────
@@ -49,57 +49,57 @@ _ENV_REGISTRY: dict[str, type] = {}
 
 def _register_builtins() -> None:
     try:
-        from skillopt.envs.alfworld.adapter import ALFWorldAdapter
+        from textualrl.envs.alfworld.adapter import ALFWorldAdapter
         _ENV_REGISTRY["alfworld"] = ALFWorldAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.searchqa.adapter import SearchQAAdapter
+        from textualrl.envs.searchqa.adapter import SearchQAAdapter
         _ENV_REGISTRY["searchqa"] = SearchQAAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.livemathematicianbench.adapter import LiveMathematicianBenchAdapter
+        from textualrl.envs.livemathematicianbench.adapter import LiveMathematicianBenchAdapter
         _ENV_REGISTRY["livemathematicianbench"] = LiveMathematicianBenchAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.babyvision.adapter import BabyVisionAdapter
+        from textualrl.envs.babyvision.adapter import BabyVisionAdapter
         _ENV_REGISTRY["babyvision"] = BabyVisionAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.spreadsheetbench.adapter import SpreadsheetBenchAdapter
+        from textualrl.envs.spreadsheetbench.adapter import SpreadsheetBenchAdapter
         _ENV_REGISTRY["spreadsheetbench"] = SpreadsheetBenchAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.mmrb.adapter import MMRBAdapter
+        from textualrl.envs.mmrb.adapter import MMRBAdapter
         _ENV_REGISTRY["mmrb"] = MMRBAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.docvqa.adapter import DocVQAAdapter
+        from textualrl.envs.docvqa.adapter import DocVQAAdapter
         _ENV_REGISTRY["docvqa"] = DocVQAAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.mathverse.adapter import MathVerseAdapter
+        from textualrl.envs.mathverse.adapter import MathVerseAdapter
         _ENV_REGISTRY["mathverse"] = MathVerseAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.officeqa.adapter import OfficeQAAdapter
+        from textualrl.envs.officeqa.adapter import OfficeQAAdapter
         _ENV_REGISTRY["officeqa"] = OfficeQAAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.sealqa.adapter import SealQAAdapter
+        from textualrl.envs.sealqa.adapter import SealQAAdapter
         _ENV_REGISTRY["sealqa"] = SealQAAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.swebench.adapter import SWEBenchAdapter
+        from textualrl.envs.swebench.adapter import SWEBenchAdapter
         _ENV_REGISTRY["swebench"] = SWEBenchAdapter
     except ImportError:
         pass
@@ -128,7 +128,7 @@ _BOOL = lambda x: str(x).lower() in ("true", "1", "yes")  # noqa: E731
 
 
 def parse_args() -> argparse.Namespace:
-    p = argparse.ArgumentParser(description="SkillOpt eval-only")
+    p = argparse.ArgumentParser(description="TextualRL eval-only")
     p.add_argument("--config", type=str, required=True)
     p.add_argument("--skill", type=str, required=True,
                    help="Path to skill .md file to evaluate")
@@ -211,7 +211,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
 
-    from skillopt.config import load_config as _load, flatten_config, is_structured
+    from textualrl.config import load_config as _load, flatten_config, is_structured
 
     cfg = _load(args.config, overrides=args.cfg_options)
     structured = is_structured(cfg)
@@ -221,7 +221,7 @@ def main() -> None:
            if v is not None and k not in ("config", "skill", "split", "cfg_options")}
     if cli:
         if structured:
-            from skillopt.config import apply_overrides
+            from textualrl.config import apply_overrides
             _MAP = {
                 "backend": "model.backend",
                 "optimizer_model": "model.optimizer",

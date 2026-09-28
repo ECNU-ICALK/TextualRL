@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""SkillOpt unified training entry point.
+"""TextualRL unified training entry point.
 
 Usage
 -----
@@ -19,14 +19,14 @@ import datetime
 import os
 import sys
 
-# Ensure the project root is on sys.path so ``import skillopt`` works
+# Ensure the project root is on sys.path so ``import textualrl`` works
 # regardless of where the script is invoked from.
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 _PROJECT_ROOT = os.path.dirname(_SCRIPT_DIR)
 if _PROJECT_ROOT not in sys.path:
     sys.path.insert(0, _PROJECT_ROOT)
 
-from skillopt.model.common import default_model_for_backend, normalize_backend_name
+from textualrl.model.common import default_model_for_backend, normalize_backend_name
 
 _OPENAI_DEFAULT_MODEL_SENTINELS = {"gpt-5.4", "gpt-5.5"}
 
@@ -39,62 +39,62 @@ _ENV_REGISTRY: dict[str, type] = {}
 def _register_builtins() -> None:
     """Lazy-import built-in adapters so we don't pull heavy deps at CLI parse time."""
     try:
-        from skillopt.envs.alfworld.adapter import ALFWorldAdapter
+        from textualrl.envs.alfworld.adapter import ALFWorldAdapter
         _ENV_REGISTRY["alfworld"] = ALFWorldAdapter
     except ImportError:
         pass  # ALFWorld deps not installed — skip
     try:
-        from skillopt.envs.searchqa.adapter import SearchQAAdapter
+        from textualrl.envs.searchqa.adapter import SearchQAAdapter
         _ENV_REGISTRY["searchqa"] = SearchQAAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.searchqa_mce.adapter import SearchQAMCEAdapter
+        from textualrl.envs.searchqa_mce.adapter import SearchQAMCEAdapter
         _ENV_REGISTRY["searchqa_mce"] = SearchQAMCEAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.livemathematicianbench.adapter import LiveMathematicianBenchAdapter
+        from textualrl.envs.livemathematicianbench.adapter import LiveMathematicianBenchAdapter
         _ENV_REGISTRY["livemathematicianbench"] = LiveMathematicianBenchAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.babyvision.adapter import BabyVisionAdapter
+        from textualrl.envs.babyvision.adapter import BabyVisionAdapter
         _ENV_REGISTRY["babyvision"] = BabyVisionAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.spreadsheetbench.adapter import SpreadsheetBenchAdapter
+        from textualrl.envs.spreadsheetbench.adapter import SpreadsheetBenchAdapter
         _ENV_REGISTRY["spreadsheetbench"] = SpreadsheetBenchAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.mmrb.adapter import MMRBAdapter
+        from textualrl.envs.mmrb.adapter import MMRBAdapter
         _ENV_REGISTRY["mmrb"] = MMRBAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.docvqa.adapter import DocVQAAdapter
+        from textualrl.envs.docvqa.adapter import DocVQAAdapter
         _ENV_REGISTRY["docvqa"] = DocVQAAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.mathverse.adapter import MathVerseAdapter
+        from textualrl.envs.mathverse.adapter import MathVerseAdapter
         _ENV_REGISTRY["mathverse"] = MathVerseAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.officeqa.adapter import OfficeQAAdapter
+        from textualrl.envs.officeqa.adapter import OfficeQAAdapter
         _ENV_REGISTRY["officeqa"] = OfficeQAAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.sealqa.adapter import SealQAAdapter
+        from textualrl.envs.sealqa.adapter import SealQAAdapter
         _ENV_REGISTRY["sealqa"] = SealQAAdapter
     except ImportError:
         pass
     try:
-        from skillopt.envs.swebench.adapter import SWEBenchAdapter
+        from textualrl.envs.swebench.adapter import SWEBenchAdapter
         _ENV_REGISTRY["swebench"] = SWEBenchAdapter
     except ImportError:
         pass
@@ -130,7 +130,7 @@ _BOOL = lambda x: x.lower() in ("true", "1", "yes")  # noqa: E731
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
-        description="SkillOpt: Executive Strategy for Self-Evolving Agent Skills",
+        description="TextualRL: Textual Reinforcement Learning for Context Management",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
@@ -479,7 +479,7 @@ _LEGACY_TO_STRUCTURED: dict[str, str] = {
 
 def load_config(args: argparse.Namespace) -> dict:
     """Load config with _base_ inheritance, then apply CLI overrides."""
-    from skillopt.config import load_config as _load, flatten_config, is_structured
+    from textualrl.config import load_config as _load, flatten_config, is_structured
 
     cfg = _load(args.config, overrides=args.cfg_options)
     structured = is_structured(cfg)
@@ -489,7 +489,7 @@ def load_config(args: argparse.Namespace) -> dict:
            if v is not None and k not in ("config", "cfg_options")}
     if cli:
         if structured:
-            from skillopt.config import apply_overrides
+            from textualrl.config import apply_overrides
             mapped = []
             for k, v in cli.items():
                 dotted = _LEGACY_TO_STRUCTURED.get(k)
@@ -601,7 +601,7 @@ def load_config(args: argparse.Namespace) -> dict:
         env = flat.get("env", "unknown")
         model = flat.get("optimizer_model", "unknown").replace("/", "-")
         ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-        flat["out_root"] = os.path.join("outputs", f"skillopt_{env}_{model}_{ts}")
+        flat["out_root"] = os.path.join("outputs", f"textualrl_{env}_{model}_{ts}")
 
     flat["out_root"] = os.path.abspath(flat["out_root"])
     return flat
@@ -614,7 +614,7 @@ def main() -> None:
     cfg = load_config(args)
 
     print(f"\n{'='*60}")
-    print(f"  SkillOpt — Executive Strategy for Self-Evolving Agent Skills")
+    print(f"  TextualRL — Textual Reinforcement Learning for Context Management")
     print(f"{'='*60}")
     print(f"  env:            {cfg.get('env')}")
     print(f"  optimizer_model:  {cfg.get('optimizer_model')}")
@@ -671,7 +671,7 @@ def main() -> None:
     adapter = get_adapter(cfg)
 
     # Build trainer and run
-    from skillopt.engine.trainer import ReflACTTrainer
+    from textualrl.engine.trainer import ReflACTTrainer
     trainer = ReflACTTrainer(cfg, adapter)
     summary = trainer.train()
 

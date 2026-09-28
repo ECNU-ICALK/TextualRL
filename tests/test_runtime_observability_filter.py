@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from skillopt.optimizer.quarantine import (
+from textualrl.optimizer.quarantine import (
     filter_observable_runtime_edits,
     filter_observable_runtime_patches,
     format_runtime_observability_context,

@@ -1,4 +1,4 @@
-"""Tests for skillopt.optimizer.scheduler — edit-budget schedulers.
+"""Tests for textualrl.optimizer.scheduler — edit-budget schedulers.
 
 ReflACT trainers use an edit-budget scheduler at each optimisation step to
 control how many skill edits are allowed (analogous to gradient clipping /
@@ -21,7 +21,7 @@ from __future__ import annotations
 
 import pytest
 
-from skillopt.optimizer.scheduler import (
+from textualrl.optimizer.scheduler import (
     LRScheduler,
     ConstantScheduler,
     LinearScheduler,

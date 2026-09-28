@@ -5,16 +5,16 @@ from pathlib import Path
 from unittest.mock import patch
 
 from tests.test_outcome_stratified_reflection import _add_task
-from skillopt.gradient.context_batching import (
+from textualrl.gradient.context_batching import (
     is_context_length_error,
     run_context_bounded_analyst,
 )
-from skillopt.gradient.reflect import (
+from textualrl.gradient.reflect import (
     run_error_analyst_minibatch,
     run_success_analyst_minibatch,
     run_minibatch_reflect,
 )
-from skillopt.optimizer.group_relative import configure_group_relative_edit_credit
+from textualrl.optimizer.group_relative import configure_group_relative_edit_credit
 
 
 OVERFLOW = "Qwen chat API returned HTTP 400: This model's maximum context length is 1010000 tokens"
@@ -122,8 +122,8 @@ class AnalystContextBatchingTest(unittest.TestCase):
 
     def test_analysts_can_propagate_errors_to_runtime_handler(self):
         for analyst in [run_error_analyst_minibatch, run_success_analyst_minibatch]:
-            with patch("skillopt.gradient.reflect.fmt_minibatch_trajectories", return_value="trace"), \
-                    patch("skillopt.gradient.reflect.chat_optimizer", side_effect=RuntimeError(OVERFLOW)):
+            with patch("textualrl.gradient.reflect.fmt_minibatch_trajectories", return_value="trace"), \
+                    patch("textualrl.gradient.reflect.chat_optimizer", side_effect=RuntimeError(OVERFLOW)):
                 with self.assertRaisesRegex(RuntimeError, "HTTP 400"):
                     analyst("skill", rows(2), "unused", raise_errors=True)
 
@@ -145,7 +145,7 @@ class AnalystContextBatchingTest(unittest.TestCase):
             for task in range(8):
                 _add_task(evidence, pred, f"task-{task}", [0] * 4,
                           [f"action-{sample}" for sample in range(4)])
-            with patch("skillopt.gradient.reflect.run_outcome_stratified_analyst_group", side_effect=analyst):
+            with patch("textualrl.gradient.reflect.run_outcome_stratified_analyst_group", side_effect=analyst):
                 result = run_minibatch_reflect(evidence, "skill", str(pred), str(patches),
                                               workers=1, failure_only=False, minibatch_size=8, edit_budget=4,
                                               random_seed=42)

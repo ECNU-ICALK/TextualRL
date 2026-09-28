@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 import tempfile
 
-from skillopt.optimizer.quarantine import (
+from textualrl.optimizer.quarantine import (
     add_quarantined_candidate,
     append_edit_history_event,
     behavior_similarity,

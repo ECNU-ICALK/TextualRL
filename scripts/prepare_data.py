@@ -136,7 +136,7 @@ def main(argv=None) -> None:
     elif args.source is None:
         parser.error("--source is required for this benchmark; see docs/data.md")
     elif args.benchmark == "livemath" and args.source.is_dir():
-        from skillopt.envs.livemathematicianbench.dataloader import load_items
+        from textualrl.envs.livemathematicianbench.dataloader import load_items
         rows = load_items(str(args.source))
     else:
         rows = read_records(args.source)

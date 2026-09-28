@@ -8,19 +8,19 @@ import unittest
 from unittest.mock import patch
 
 from tests.test_outcome_stratified_reflection import _add_task
-from skillopt.config import flatten_config
-from skillopt.gradient.aggregate import merge_patches
-from skillopt.gradient.reflect import (
+from textualrl.config import flatten_config
+from textualrl.gradient.aggregate import merge_patches
+from textualrl.gradient.reflect import (
     build_outcome_stratified_task_blocks, fmt_trajectory,
     run_minibatch_reflect, run_outcome_stratified_analyst_group,
 )
-from skillopt.optimizer.cross_group import (
+from textualrl.optimizer.cross_group import (
     ANALYST_SUFFIX, MERGE_SUFFIX, annotate_cross_group_review,
     attach_cross_group_cards, collect_cross_group_evidence,
     configure_cross_group_evidence, cross_group_evidence_enabled,
     validate_cross_group_config,
 )
-from skillopt.optimizer.group_relative import configure_group_relative_edit_credit
+from textualrl.optimizer.group_relative import configure_group_relative_edit_credit
 
 
 def _card(task="success-a", rollout="success-a__sample_01_of_04", quote="wait for updated state"):
@@ -100,8 +100,8 @@ class CrossGroupEvidenceTest(unittest.TestCase):
             items = [item for block in blocks for item in block]
             output = {"patch": {"edits": []}, "cross_group_cards": [
                 _card(task=item["rollout_group_id"], rollout=item["id"]) for item in items]}
-            with patch("skillopt.gradient.reflect.chat_optimizer", return_value=("response", {})) as chat, \
-                    patch("skillopt.gradient.reflect.extract_json", return_value=output):
+            with patch("textualrl.gradient.reflect.chat_optimizer", return_value=("response", {})) as chat, \
+                    patch("textualrl.gradient.reflect.extract_json", return_value=output):
                 result = run_outcome_stratified_analyst_group(
                     "old skill", items, tmp, route="stable_success", edit_budget=4,
                     system_prompt="original system", meta_skill_context="meta unchanged")
@@ -119,8 +119,8 @@ class CrossGroupEvidenceTest(unittest.TestCase):
             _add_task(rows, Path(tmp), "mixed", [1, 0, 1, 0], ["good", "bad", "good", "bad"])
             block = build_outcome_stratified_task_blocks(rows, tmp)["mixed"][0]
             output = {"patch": {"edits": [{"op": "append", "content": "Original rule"}]}}
-            with patch("skillopt.gradient.reflect.chat_optimizer", return_value=("response", {})) as chat, \
-                    patch("skillopt.gradient.reflect.extract_json", return_value=output):
+            with patch("textualrl.gradient.reflect.chat_optimizer", return_value=("response", {})) as chat, \
+                    patch("textualrl.gradient.reflect.extract_json", return_value=output):
                 result = run_outcome_stratified_analyst_group(
                     "skill", block, tmp, route="mixed", edit_budget=4, system_prompt="original")
         self.assertNotIn("Cross-Group", chat.call_args.kwargs["system"])
@@ -137,9 +137,9 @@ class CrossGroupEvidenceTest(unittest.TestCase):
                          "decision": "narrow", "reason": "Successful retries have changed state.",
                          "evidence": [{"task_id": "success-a", "rollout_id": "success-a__sample_01_of_04",
                                        "relation": "limits", "reason": "State changes before the retry."}]}}]}
-        with patch("skillopt.gradient.aggregate.chat_optimizer", return_value=("response", {})) as chat, \
-                patch("skillopt.gradient.aggregate.extract_json", return_value=response), \
-                patch("skillopt.gradient.aggregate.load_prompt", return_value="normal merge"):
+        with patch("textualrl.gradient.aggregate.chat_optimizer", return_value=("response", {})) as chat, \
+                patch("textualrl.gradient.aggregate.extract_json", return_value=response), \
+                patch("textualrl.gradient.aggregate.load_prompt", return_value="normal merge"):
             result = merge_patches("old", [original], [], verbose=False, cross_group_evidence=_pool())
         self.assertEqual(chat.call_count, 1)
         self.assertIn("wait for updated state", chat.call_args.kwargs["user"])
@@ -150,7 +150,7 @@ class CrossGroupEvidenceTest(unittest.TestCase):
 
     def test_disabled_merge_ignores_cards_and_preserves_zero_call_shortcut(self):
         original = {"edits": [{"op": "append", "content": "Original"}]}
-        with patch("skillopt.gradient.aggregate.chat_optimizer") as chat:
+        with patch("textualrl.gradient.aggregate.chat_optimizer") as chat:
             result = merge_patches("old", [original], [], verbose=False, cross_group_evidence=_pool())
         self.assertEqual(result, original)
         chat.assert_not_called()
@@ -158,7 +158,7 @@ class CrossGroupEvidenceTest(unittest.TestCase):
     def test_no_cards_or_no_edits_does_not_create_a_review(self):
         configure_cross_group_evidence(True)
         original = {"edits": [{"op": "append", "content": "Original"}]}
-        with patch("skillopt.gradient.aggregate.chat_optimizer") as chat:
+        with patch("textualrl.gradient.aggregate.chat_optimizer") as chat:
             result = merge_patches("old", [original], [], verbose=False, cross_group_evidence={"cards": []})
             empty = merge_patches("old", [], [], verbose=False, cross_group_evidence=_pool())
         self.assertEqual(result, original)
@@ -168,8 +168,8 @@ class CrossGroupEvidenceTest(unittest.TestCase):
     def test_normal_two_group_merge_does_not_add_an_extra_model_call(self):
         configure_cross_group_evidence(True)
         source = {"edits": [{"op": "append", "content": "Original"}]}
-        with patch("skillopt.gradient.aggregate.chat_optimizer", return_value=("response", {})) as chat, \
-                patch("skillopt.gradient.aggregate.extract_json", return_value=source):
+        with patch("textualrl.gradient.aggregate.chat_optimizer", return_value=("response", {})) as chat, \
+                patch("textualrl.gradient.aggregate.extract_json", return_value=source):
             result = merge_patches("old", [source], [source], verbose=False, cross_group_evidence=_pool())
         self.assertEqual(chat.call_count, 1)
         self.assertEqual(result["cross_group_audit"]["status"], "model_reviewed")
@@ -177,7 +177,7 @@ class CrossGroupEvidenceTest(unittest.TestCase):
     def test_failed_review_preserves_existing_fallback_without_gate(self):
         configure_cross_group_evidence(True)
         source = {"edits": [{"op": "append", "content": "Original"}]}
-        with patch("skillopt.gradient.aggregate.chat_optimizer", side_effect=TimeoutError):
+        with patch("textualrl.gradient.aggregate.chat_optimizer", side_effect=TimeoutError):
             result = merge_patches("old", [source], [], verbose=False, cross_group_evidence=_pool())
         self.assertEqual(result["edits"][0]["content"], "Original")
         self.assertEqual(result["cross_group_audit"]["status"], "merge_fallback_not_reviewed")
@@ -209,7 +209,7 @@ class CrossGroupEvidenceTest(unittest.TestCase):
                 return run_minibatch_reflect(rows, "skill", str(pred), str(patches),
                     workers=1, failure_only=False, minibatch_size=8, edit_budget=4, random_seed=42)
             fake = {"patch": {"edits": []}, "source_type": "contrastive"}
-            with patch("skillopt.gradient.reflect.run_outcome_stratified_analyst_group", return_value=fake) as analyst:
+            with patch("textualrl.gradient.reflect.run_outcome_stratified_analyst_group", return_value=fake) as analyst:
                 run()
                 run()
                 self.assertEqual(analyst.call_count, 1)
