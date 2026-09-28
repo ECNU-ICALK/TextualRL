@@ -2,8 +2,6 @@
 
 TextualRL improves an agent's shared textual instructions while keeping the target model's weights fixed. It collects multiple rollouts for each training task, critiques outcome groups, reviews proposed edits against pooled trajectory evidence, and selects candidate contexts using held-out validation rewards.
 
-This source release builds on [Microsoft SkillOpt](https://github.com/microsoft/SkillOpt). The `skillopt` Python namespace is retained for compatibility; `textualrl` provides the public command-line interface. See [third-party notices](THIRD_PARTY_NOTICES.md) for attribution and licenses.
-
 ## What is included
 
 - Groupwise Policy Critique and Cross-Group Policy Update implementations, prompts, and initial skills.
@@ -88,8 +86,6 @@ See [running experiments](docs/running.md) for configuration controls, checkpoin
 
 **Cross-Group Policy Update** consolidates proposals, reviews their scope against current-step evidence, and applies a bounded patch. The ordinary step accepts a candidate only when its configured validation score improves.
 
-The configurations also retain inherited **Meta** and **Slow** mechanisms. In particular, unconditional Slow updates can change the active context at epoch boundaries without the ordinary step-level validation comparison. Consequently, not every context change is validation-accepted, and the final context can differ from `best_skill.md`. See the [method-to-code map](docs/method.md) and [checkpoint explanation](docs/running.md#best-on-validation-and-final-contexts).
-
 ## Documentation
 
 - [Installation and optional dependencies](docs/installation.md)
@@ -98,10 +94,6 @@ The configurations also retain inherited **Meta** and **Slow** mechanisms. In pa
 - [Training, evaluation, resume, and saved artifacts](docs/running.md)
 - [Method-to-code map](docs/method.md)
 - [Release provenance and reproducibility scope](docs/reproducibility.md)
-
-## License and acknowledgements
-
-The copied [MIT license](LICENSE) and Microsoft copyright notice are preserved verbatim. Bundled ALFWorld environment helpers carry Apache-2.0 attribution; the corresponding license and notices are included in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Benchmark data and separately installed dependencies retain their own terms.
 
 ## Offline checks
 
@@ -116,3 +108,9 @@ splitting, generation settings, checkpoint behavior, and split preparation. An
 end-to-end smoke test runs the trainer, completed-run resume, and evaluator
 against a local HTTP fixture using synthetic tasks. These checks use no paid
 model service. They do not measure benchmark accuracy.
+
+## License and acknowledgements
+
+We thank the authors of [SkillOpt](https://github.com/microsoft/SkillOpt) for releasing their code, which our implementation builds on.
+
+The [MIT license](LICENSE) and Microsoft copyright notice are preserved. Bundled ALFWorld environment helpers carry Apache-2.0 attribution, with the corresponding license and notices included in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Benchmark data and separately installed dependencies retain their own terms.
