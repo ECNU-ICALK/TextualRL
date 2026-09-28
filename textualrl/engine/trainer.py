@@ -1286,11 +1286,28 @@ class TextualRLTrainer:
         )
         reasoning = cfg.get("reasoning_effort", "") or None
         set_reasoning_effort(reasoning)
+        reasoning_labels = {}
+        for role, role_backend in (("target", target_backend), ("optimizer", optimizer_backend)):
+            if role_backend in {"qwen", "qwen_chat"}:
+                from textualrl.model import qwen_backend
+
+                role_config = getattr(qwen_backend, f"{role.upper()}_CONFIG")
+                thinking_api = qwen_backend._role_env(role, "THINKING_API", "auto")
+                if thinking_api == "reasoning_effort":
+                    reasoning_labels[role] = (
+                        qwen_backend._role_env(role, "REASONING_EFFORT", "medium")
+                        if role_config.enable_thinking else "none"
+                    )
+                else:
+                    reasoning_labels[role] = f"{thinking_api}, enabled={role_config.enable_thinking}"
+            else:
+                reasoning_labels[role] = reasoning or "backend default"
         print(
             f"  [model config] backend={backend}  "
             f"optimizer={cfg['optimizer_model']} ({optimizer_backend})  "
             f"target={cfg['target_model']} ({target_backend})  "
-            f"reasoning={reasoning or 'off'}"
+            f"optimizer_reasoning={reasoning_labels['optimizer']}  "
+            f"target_reasoning={reasoning_labels['target']}"
         )
 
         # ── Initialize Ray ───────────────────────────────────────────────

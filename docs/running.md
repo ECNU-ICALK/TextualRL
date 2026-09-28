@@ -66,9 +66,10 @@ Use the same data, model settings, and configuration when resuming. `--resume-fr
 | Edit budget | Cosine schedule from 4 to 2 |
 | Training sampling / evaluation request seed | 42 / 42 |
 | Target training / evaluation temperature | 0.7 / 0.0 |
-| Worker / role endpoint concurrency defaults | 4, adjustable for the user's endpoint capacity |
+| Target rollout / API workers | 32 for SearchQA and ALFWorld, 16 for the other benchmarks |
+| Analyst workers | 16 |
 
-The lower concurrency defaults make the examples easier to run on user-provided services. They are not the paper's measured throughput setting. Dataset size determines the number of batches and the final partial batch; grouping can skip homogeneous routes that lack two distinct tasks.
+Worker counts follow the saved source-run configurations. Per-endpoint quotas are deployment settings and default to the corresponding worker capacities. Set them to match the serving endpoint. Dataset size determines the number of batches and the final partial batch; grouping can skip homogeneous routes that lack two distinct tasks.
 
 Target output-token limits are:
 

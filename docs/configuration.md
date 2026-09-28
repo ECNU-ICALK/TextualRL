@@ -32,13 +32,13 @@ Both public roles use the `qwen_chat` transport, which supports the two API styl
 | `<role>_reasoning_effort` | `none` | `medium` |
 | `<role>_qwen_chat_enable_thinking` | `false` | `true` |
 | `<role>_qwen_chat_temperature` | `0.7` for training | `none`, omitted from the request |
-| `<role>_endpoint_concurrency` | `4` | `4` |
+| `<role>_endpoint_concurrency` | `32` for SearchQA/ALFWorld, `16` otherwise | `16` |
 
 For Qwen targets, the request explicitly carries `chat_template_kwargs.enable_thinking: false`. The optimizer uses Responses requests with medium reasoning and no explicit output-token cap. This requires endpoints that accept those fields and API styles. Editing only the model name is insufficient when moving to a service with different request semantics; adjust the role's API and thinking fields together.
 
 Target output limits are benchmark-specific and listed in [running experiments](running.md#default-optimization-settings). `evaluation_target_temperature: 0.0` and `evaluation_target_seed: 42` override target generation during validation and evaluation. `seed: 42` controls training sampling, while `split_seed` belongs to data-split configuration. The release presets read existing split directories rather than silently regenerating them.
 
-An endpoint base URL may contain a comma-separated pool. A role's `endpoint_concurrency` may be one positive integer for every endpoint, or a list with one capacity per endpoint. If both roles resolve to the same request URL, the runtime shares that URL's capacity using the smaller declared limit. `workers` controls target rollout workers and `analyst_workers` controls parallel critique workers; endpoint capacity limits actual in-flight HTTP calls. Inspect `runtime_requests.jsonl` for request settings and concurrency observations.
+An endpoint base URL may contain a comma-separated pool. A role's `endpoint_concurrency` may be one positive integer for every endpoint, or a list with one capacity per endpoint. The presets set these deployment limits to the corresponding worker capacities; adjust them to the capacity of your endpoint. If omitted, target capacity defaults to `max_api_workers` (or `workers`), and optimizer capacity defaults to `analyst_workers`, with a fallback of 16. If both roles resolve to the same request URL, the runtime shares that URL's capacity using the smaller declared limit. `workers` controls target rollout workers and `analyst_workers` controls parallel critique workers; endpoint capacity limits actual in-flight HTTP calls. Inspect `runtime_requests.jsonl` for request settings and concurrency observations.
 
 ## Optimization controls
 

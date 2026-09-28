@@ -51,7 +51,7 @@ accumulation: 1
 seed: 42
 minibatch_size: 8
 merge_batch_size: 8
-analyst_workers: 4
+analyst_workers: 16
 failure_only: false
 max_analyst_rounds: 3
 edit_budget: 4
@@ -127,7 +127,7 @@ split_output_dir: ''
 exec_timeout: 120
 data_dirs:
 - ${TEXTUALRL_DATA_DIR}/officeqa/documents
-workers: 4
+workers: 16
 max_tool_turns: 24
 max_completion_tokens: 8000
 search_mode: offline
@@ -154,7 +154,7 @@ optimizer_qwen_chat_timeout_seconds: 3600
 gate_metric: hard
 paired_audit: true
 paired_non_degrading: false
-max_api_workers: 4
+max_api_workers: 16
 optimizer_reasoning_effort: medium
 optimizer_qwen_chat_api_style: responses
 optimizer_qwen_chat_omit_output_limit: true
@@ -166,5 +166,5 @@ optimizer_thinking_api: reasoning_effort
 target_reasoning_effort: none
 target_api_style: chat_completions
 optimizer_api_style: responses
-target_endpoint_concurrency: 4
-optimizer_endpoint_concurrency: 4
+target_endpoint_concurrency: 16
+optimizer_endpoint_concurrency: 16

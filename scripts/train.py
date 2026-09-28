@@ -591,7 +591,19 @@ def main() -> None:
     print(f"  target_model:  {cfg.get('target_model')}")
     print(f"  optimizer_backend:{cfg.get('optimizer_backend', 'openai_chat')}")
     print(f"  target_backend:{cfg.get('target_backend', 'openai_chat')}")
-    print(f"  reasoning:      {cfg.get('reasoning_effort') or 'off'}")
+    for role in ("target", "optimizer"):
+        role_backend = normalize_backend_name(
+            cfg.get(f"{role}_backend") or cfg.get("model_backend")
+        )
+        if role_backend == "qwen_chat":
+            print(
+                f"  {role}_thinking: "
+                f"api={cfg.get(f'{role}_thinking_api', 'backend default')}, "
+                f"enabled={cfg.get(f'{role}_qwen_chat_enable_thinking', cfg.get('qwen_chat_enable_thinking', 'backend default'))}, "
+                f"effort={cfg.get(f'{role}_reasoning_effort', 'backend default')}"
+            )
+        else:
+            print(f"  {role}_reasoning: {cfg.get('reasoning_effort') or 'backend default'}")
     print(f"  rewrite_effort: {cfg.get('rewrite_reasoning_effort') or 'off'}")
     print(f"  epochs:         {cfg.get('num_epochs')}")
     print(f"  train_size:     {cfg.get('train_size') or 'from dataset'}")
