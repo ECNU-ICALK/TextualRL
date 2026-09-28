@@ -8,8 +8,6 @@ TextualRL improves an agent's shared textual instructions while keeping the targ
 - Configurations and adapters for SearchQA, SpreadsheetBench, OfficeQA, DocVQA, LiveMathematicianBench, and ALFWorld.
 - A portable training/evaluation CLI with separate target and optimizer credentials, dry-run configuration inspection, and resume support.
 
-Benchmark datasets, trained skills, run outputs, model weights, and paper-result artifacts are not bundled.
-
 ## Install
 
 Use Python 3.10 or newer from the repository directory:
@@ -29,7 +27,7 @@ python -m pip install -e '.[spreadsheetbench]'
 python -m pip install -e '.[alfworld]'
 ```
 
-See [installation](docs/installation.md) for all six benchmarks. Obtain and prepare datasets separately using the [data guide](docs/data.md).
+See [installation](docs/installation.md) for all six benchmarks. Prepare datasets using the [data guide](docs/data.md).
 
 ## Inspect, train, and evaluate
 

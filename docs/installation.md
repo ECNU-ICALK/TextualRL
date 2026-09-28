@@ -23,9 +23,9 @@ python -m textualrl --help
 | LiveMathematicianBench | `python -m pip install -e '.[livemathematicianbench]'` | No additional Python package for the prepared multiple-choice data. |
 | ALFWorld | `python -m pip install -e '.[alfworld]'` | ALFWorld, Gymnasium, NumPy, and OmegaConf; acquire the environment assets separately. |
 
-`python -m pip install -e '.[benchmarks]'` installs all listed Python extras. It does not download datasets or environment assets. Follow [data preparation](data.md) before launching a real run. ALFWorld's dependencies may require platform-specific build tools; its text environment does not require serving the target model on the same machine.
+`python -m pip install -e '.[benchmarks]'` installs all listed Python extras. Prepare datasets and environment assets as described in [data preparation](data.md) before launching a real run. ALFWorld's dependencies may require platform-specific build tools; its text environment does not require serving the target model on the same machine.
 
-The packaged CLI calls remote or separately hosted model endpoints. A local vLLM server, GPU training framework, or model weights are not part of the core installation. The examples use separate OpenAI-compatible endpoints for the target and optimizer roles.
+Connect the CLI to remote or locally hosted OpenAI-compatible model endpoints for the target and optimizer roles.
 
 ## Credentials
 
@@ -47,4 +47,4 @@ python -m pip install -e '.[dev]'
 python -m build
 ```
 
-The wheel contains Python code, runtime prompts, initial skills, and the ALFWorld YAML runtime configuration. The source archive also includes the example configurations, identifier/path manifests, and documentation. Keep the checkout or source archive available for data preparation and `--config configs/...` examples; the wheel does not install repository-level data manifests or configuration files into the current directory.
+The wheel contains Python code, runtime prompts, initial skills, and the ALFWorld YAML runtime configuration. The source archive also includes the example configurations, identifier/path manifests, and documentation. Use a checkout or unpacked source archive when running data preparation commands and `--config configs/...` examples, which refer to repository-level manifests and configuration files.

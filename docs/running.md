@@ -119,7 +119,7 @@ Artifact paths below are relative to the training output directory. Some artifac
 
 When accumulation exceeds one, rollout and patch folders are nested in `steps/step_NNNN/batch_A/`. Standalone `eval` writes predictions and `eval_summary.json` to its own output directory. The global `summary.json` uses `test_hard` for the best-on-validation test score and `final_test_hard` for the final-context test score.
 
-Token accounting uses reported usage when available. Some backends estimate missing usage, so token summaries are diagnostic accounting rather than provider invoices. Keep task content and model traces in local output directories; the source package does not include generated runs.
+Token accounting uses reported usage when available. Some backends estimate missing usage, so token summaries are diagnostic accounting rather than provider invoices. Keep task content and model traces in local output directories.
 
 ## Execution environment
 

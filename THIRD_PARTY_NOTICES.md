@@ -41,6 +41,6 @@ The ALFWorld runtime package is installed separately; its license and the terms 
 
 ## Datasets, model services, and other dependencies
 
-No benchmark examples, document corpus, spreadsheets, document images, or model weights are distributed in this source package. Identifier/path manifests and preparation scripts, where included, describe separately obtained benchmark sources. Consult [the data guide](docs/data.md) and each provider's own terms before redistributing data or derived task content.
+Identifier/path manifests and preparation scripts describe the benchmark sources used for data preparation. Consult [the data guide](docs/data.md) and each provider's own terms before redistributing data or derived task content.
 
 Python packages declared in `pyproject.toml` and external model services are separate dependencies. Their inclusion in an installation or a configuration does not change their licenses or grant access to hosted models.

@@ -1,6 +1,6 @@
 # Data preparation
 
-The release includes **identifiers and ALFWorld game paths only** in
+Prepare benchmark splits from the identifiers and ALFWorld game paths in
 `data/manifests/`. Obtain the original examples and assets from their providers
 under the applicable access terms. The preparation command selects those exact
 identifiers in manifest order. It does not resample splits or change answers.
@@ -86,8 +86,7 @@ offline formula recalculation.
 
 OfficeQA's default is local-document `search_mode: offline`. If enabling its
 optional custom search provider, supply `search_api_url` or
-`OFFICEQA_CUSTOM_SEARCH_URL`, together with `OFFICEQA_CUSTOM_SEARCH_AUTH`. No private
-search service is configured in the release.
+`OFFICEQA_CUSTOM_SEARCH_URL`, together with `OFFICEQA_CUSTOM_SEARCH_AUTH`.
 
 Raw data, downloaded assets, local paths in prepared records, and execution
 outputs are ignored by Git. The six lightweight manifests remain tracked.
