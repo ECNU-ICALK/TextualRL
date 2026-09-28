@@ -30,9 +30,3 @@ The ordinary step evaluates the complete candidate context on held-out validatio
 | Inherited Meta and Slow mechanisms | [`textualrl/optimizer/meta_skill.py`](../textualrl/optimizer/meta_skill.py), [`slow_update.py`](../textualrl/optimizer/slow_update.py) |
 | Benchmark loaders, execution, and metrics | [`textualrl/envs/`](../textualrl/envs/), [`textualrl/datasets/base.py`](../textualrl/datasets/base.py) |
 | Shared optimizer prompts and benchmark-specific prompts | [`textualrl/prompts/`](../textualrl/prompts/), `textualrl/envs/<benchmark>/prompts/` |
-
-## Inherited Meta and Slow settings
-
-The provided configurations retain `use_meta_skill: true` and `use_slow_update: true`. Meta produces optimizer-side memory from longitudinal comparisons between contexts. Slow produces guidance inserted into the active context at epoch boundaries. These mechanisms can require extra target rollouts and optimizer calls beyond the ordinary step.
-
-With `slow_update_gate_with_selection: false`, a produced Slow update is injected without the ordinary step's validation comparison. This is the inherited unconditional Slow path; it does not mean all updates are validation-accepted. The prior validation score can remain the recorded reference until a later evaluation. The stored best context remains separate. When final test evaluation is enabled, the trainer also attempts a final-context validation and promotes that context if it improves over the stored best. See [checkpoint selection](running.md#best-on-validation-and-final-contexts) before reporting results.
