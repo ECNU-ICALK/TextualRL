@@ -85,8 +85,10 @@ loader recognizes numbered `*_init.xlsx` / `*_golden.xlsx` pairs and bare
 offline formula recalculation.
 
 OfficeQA's default is local-document `search_mode: offline`. If enabling its
-optional custom search provider, supply `search_api_url` or
-`OFFICEQA_CUSTOM_SEARCH_URL`, together with `OFFICEQA_CUSTOM_SEARCH_AUTH`.
+optional custom search provider, set `search_mode: custom_search` and a non-empty
+`search_api_url` in the YAML configuration. Export the authentication token in
+the environment variable named by `search_auth_env`, which defaults to
+`OFFICEQA_CUSTOM_SEARCH_AUTH` in the provided configuration.
 
 Raw data, downloaded assets, local paths in prepared records, and execution
 outputs are ignored by Git. The six lightweight manifests remain tracked.
