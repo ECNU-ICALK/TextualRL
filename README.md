@@ -108,6 +108,6 @@ model service. They do not measure benchmark accuracy.
 
 ## License and acknowledgements
 
-We thank the authors of [SkillOpt](https://github.com/microsoft/SkillOpt) for releasing their code, which our implementation builds on.
+We thank the authors of [SkillOpt](https://github.com/microsoft/SkillOpt) for releasing their code, which we consulted when developing our implementation.
 
 The [MIT license](LICENSE) and Microsoft copyright notice are preserved. Bundled ALFWorld environment helpers carry Apache-2.0 attribution, with the corresponding license and notices included in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Benchmark data and separately installed dependencies retain their own terms.
