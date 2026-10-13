@@ -1,0 +1,57 @@
+# TextualRL benchmark scaffold. Copy to configs/your_benchmark.yaml.
+# Replace your_benchmark throughout this file and register your adapter in
+# scripts/train.py and scripts/eval_only.py before running real training.
+# The public CLI accepts flat, self-contained YAML (no _base_ inheritance).
+
+env: your_benchmark
+out_root: ${TEXTUALRL_OUTPUT_DIR}/your_benchmark
+# Copied with the scaffold; edit this Markdown for your task.
+skill_init: ${TEXTUALRL_REPO_ROOT}/textualrl/envs/your_benchmark/skills/initial.md
+
+# Each split directory contains one JSON array or JSONL file.
+split_mode: split_dir
+split_dir: ${TEXTUALRL_DATA_DIR}/your_benchmark/splits
+# For a single raw JSON/JSONL file, set split_mode: ratio and split_dir: ''.
+# data_path: ${TEXTUALRL_DATA_DIR}/your_benchmark/items.jsonl
+split_ratio: '2:1:7'
+split_seed: 42
+workers: 4
+max_completion_tokens: 4096
+limit: 0                         # Per-split limit; 0 loads all items.
+
+num_epochs: 4
+batch_size: 40
+accumulation: 1
+seed: 42
+same_task_rollouts: 1            # Override expand_same_task_rollouts for >1.
+analyst_workers: 4
+minibatch_size: 8
+merge_batch_size: 8
+edit_budget: 4                   # Maximum edits per optimizer step.
+lr_scheduler: cosine
+use_slow_update: true
+use_meta_skill: true
+use_gate: true
+sel_env_num: 0                   # 0 evaluates the full validation split.
+test_env_num: 0                  # 0 evaluates the full test split.
+eval_test: true
+evaluation_target_temperature: 0.0
+evaluation_target_seed: 42
+
+# Both roles use the public OpenAI-compatible transport. The CLI supplies
+# defaults for these variables; see docs/configuration.md to override them.
+# Keep credentials in TARGET_API_KEY and OPTIMIZER_API_KEY, never in YAML.
+target_backend: qwen_chat
+target_model: ${TEXTUALRL_TARGET_MODEL}
+target_qwen_chat_base_url: ${TARGET_BASE_URL}
+target_api_style: chat_completions
+target_thinking_api: chat_template
+target_reasoning_effort: none
+target_endpoint_concurrency: 4
+optimizer_backend: qwen_chat
+optimizer_model: ${TEXTUALRL_OPTIMIZER_MODEL}
+optimizer_qwen_chat_base_url: ${OPTIMIZER_BASE_URL}
+optimizer_api_style: responses
+optimizer_thinking_api: reasoning_effort
+optimizer_reasoning_effort: medium
+optimizer_endpoint_concurrency: 4
