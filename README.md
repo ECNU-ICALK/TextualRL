@@ -121,6 +121,19 @@ end-to-end smoke test runs the trainer, completed-run resume, and evaluator
 against a local HTTP fixture using synthetic tasks. These checks use no paid
 model service. They do not measure benchmark accuracy.
 
+## Citation
+
+If you use TextualRL in your research, please cite:
+
+```bibtex
+@article{huai2026textualrl,
+  title={TextualRL: Textual Reinforcement Learning for Context Management},
+  author={Huai, Tianyu and Zhou, Jie and Mao, Bo and Chen, Qin and He, Liang and Qiu, Xipeng},
+  journal={arXiv preprint arXiv:2610.18216},
+  year={2026}
+}
+```
+
 ## License and acknowledgements
 
 We thank the authors of [SkillOpt](https://github.com/microsoft/SkillOpt), which we consulted when developing our implementation.
